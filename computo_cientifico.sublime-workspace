@@ -244,19 +244,10 @@
 	"buffers":
 	[
 		{
-			"contents": "Lista de Cosas para hacer :\n\n- Seguimiento a lo de Msft : Regresar la Laptop.\n- Wait for shipping things. \n- PS4.\n- Avanzar el Prototypo de Juego.\n- Sacar fecha del TOEFL.\n\n- Programar UNet en Pytorch.\n- Revisar tarea de analisis de datos el domingo.\n- Hacer tarea de computo cientifico.\n",
-			"settings":
-			{
-				"buffer_size": 288,
-				"line_ending": "Windows",
-				"name": "Lista de Cosas para hacer :"
-			}
-		},
-		{
 			"file": "Tarea_1/compare.py",
 			"settings":
 			{
-				"buffer_size": 1731,
+				"buffer_size": 3731,
 				"line_ending": "Windows"
 			}
 		},
@@ -273,7 +264,7 @@
 			"file": "Tarea_1/factorization.py",
 			"settings":
 			{
-				"buffer_size": 3064,
+				"buffer_size": 3757,
 				"line_ending": "Windows"
 			}
 		}
@@ -436,7 +427,7 @@
 	],
 	"find":
 	{
-		"height": 28.0
+		"height": 27.0
 	},
 	"find_in_files":
 	{
@@ -537,39 +528,11 @@
 			[
 				{
 					"buffer": 0,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 288,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								77,
-								77
-							]
-						],
-						"settings":
-						{
-							"auto_name": "Lista de Cosas para hacer :",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "Tarea_1/compare.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1731,
+						"buffer_size": 3731,
 						"regions":
 						{
 						},
@@ -590,11 +553,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 1,
 					"file": "computo_cientifico.sublime-project",
 					"semi_transient": false,
 					"settings":
@@ -623,12 +586,12 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 2,
 					"file": "Tarea_1/factorization.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3064,
+						"buffer_size": 3757,
 						"regions":
 						{
 						},
@@ -657,7 +620,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 28.0
+		"height": 27.0
 	},
 	"input":
 	{
@@ -694,7 +657,7 @@
 	"project": "computo_cientifico.sublime-project",
 	"replace":
 	{
-		"height": 52.0
+		"height": 50.0
 	},
 	"save_all_on_build": true,
 	"select_file":
