@@ -81,6 +81,10 @@ def cholesky(matrix):
         print("Not a square matrix.")
         return (-1,)
 
+    if not np.allclose(matrix, matrix.T):
+        print("Not a symmetric matrix.")
+        return (-1,)
+
     # Check if there are zeroes in the diagonal
     if len(np.diag(matrix)) - np.count_nonzero(np.diag(matrix)) > 0:
         print("Not an hermitian positive definite matrix.")
