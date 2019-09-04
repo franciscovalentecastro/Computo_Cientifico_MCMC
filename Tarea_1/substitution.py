@@ -89,7 +89,6 @@ def main():
     # Generate random (upper triangular) system of equations
     A = np.triu(generate_random_matrix((5, 5)))
     b = generate_random_matrix((5,))
-    print(b)
 
     print("A = ", A, end="\n\n")
     print("b = ", b, end="\n\n")

@@ -7,7 +7,7 @@ import functools
 
 import matplotlib.pyplot as plt
 
-from substitution import * 
+from substitution import *
 from factorization import *
 
 
@@ -32,14 +32,18 @@ def verify_factorization(matrix):
 
 def compare_execution_speed_different_sized_matrices(max_size,
                                                      debug=True,
+                                                     calculateStep=1,
                                                      printStep=50):
 
     # Sample of times
     times_cholesky = []
     times_lup = []
 
+    # Time range
+    times = range(calculateStep, max_size, calculateStep)
+
     # Loop trough matrix sizes
-    for size in range(1, max_size + 1):
+    for size in times:
 
         # Generate random positve symetric matrix
         A = generate_random_matrix((size, size))
@@ -53,14 +57,20 @@ def compare_execution_speed_different_sized_matrices(max_size,
 
         tLUP = measure_factorization_time(A, lup_factorization)
         times_lup.append(tLUP)
-
         if size % printStep == 0:
             print("Matrix Size : " + str(size),
                   "Cholesky Time : %.5f" % tCholesky,
                   "LUP Time : %.5f" % tLUP, sep=', ')
 
-    plt.plot(range(1, max_size + 1), times_cholesky, label="Cholesky")
-    plt.plot(range(1, max_size + 1), times_lup, label="LUP")
+    # Plot time graphs
+    plt.figure(figsize=(10, 10))
+
+    # Set axis name
+    plt.xlabel("Matrix Size")
+    plt.ylabel("Execution Time")
+
+    plt.plot(times, times_cholesky, label="Cholesky")
+    plt.plot(times, times_lup, label="LUP")
     plt.legend(loc='upper right')
     plt.savefig("execution_times_graph_N=%d.png" % max_size,
                 bbox_inches='tight')
@@ -97,6 +107,7 @@ def compare_execution_speed_fixed_sized_matrices(size,
                   "Cholesky Time : %.5f" % tCholesky,
                   "LUP Time : %.5f" % tLUP, sep=', ')
 
+    plt.figure(figsize=(10, 10))
     plt.hist([times_cholesky, times_lup],
              bins='auto', label=['cholesky', 'lup'])
     plt.legend(loc='upper right')
@@ -106,7 +117,6 @@ def compare_execution_speed_fixed_sized_matrices(size,
 
 
 def main():
-
     # Get parameters
     if len(sys.argv) > 4:
         max_size = int(sys.argv[1])

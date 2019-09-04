@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import sys
 import numpy as np
 import math
 from substitution import *
@@ -101,41 +102,62 @@ def cholesky(matrix):
     return R
 
 
-def main():
-    # Print format to 3 decimal spaces
-    np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
+def factorize(matrix):
+    # Rename matrix
+    A = matrix
+    print("A :", A, sep="\n")
 
-    # Create matrix
-    A = generate_random_matrix((5, 5))
-    A = A @ np.transpose(A)
-    print(A)
-
-    R = cholesky(A)
-
-    if type(R) is np.ndarray:
-        print("Cholesky : ")
-        print(R)
-        print("Cholesky factorization correct ? : ",
-              np.allclose(np.transpose(R) @ R, A), end="\n\n")
-
+    print("LUP : ", end="\n")
     (L, U, P) = lup_factorization(A)
 
     if type(L) is np.ndarray:
-        print("LUP : ")
-        print(L)
-        print(U)
-        print(P)
+        print("L : ", L, sep="\n")
+        print("U : ", U, sep="\n")
+        print("P : ", P, sep="\n")
         print("LUP factorization correct ? : ",
               np.allclose(np.transpose(P) @ L @ U, A), end="\n\n")
 
+    print("LU : ", end="\n")
     (L, U) = lu_factorization(A)
 
     if type(L) is np.ndarray:
-        print("LU : ")
-        print(L)
-        print(U)
+        print("L :", L, sep="\n")
+        print("U :", U, sep="\n")
         print("LU factorization correct ? : ",
               np.allclose(L @ U, A), end="\n\n")
+
+    print("Cholesky : ", end="\n")
+    R = cholesky(A)
+
+    if type(R) is np.ndarray:
+        print("R :", R, sep="\n")
+        print("Cholesky factorization correct ? : ",
+              np.allclose(np.transpose(R) @ R, A), end="\n\n")
+
+
+def main():
+    # Get seed parameter
+    seed = 0 if len(sys.argv) == 1 else int(sys.argv[1])
+
+    # Print format to 3 decimal spaces and fix seed
+    np.random.seed(seed)
+    np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
+
+    # Create matrix A
+    A = np.matrix([[1, 0, 0, 0, 1],
+                   [-1, 1, 0, 0, 1],
+                   [-1, -1, 1, 0, 1],
+                   [-1, -1, -1, 1, 1],
+                   [-1, -1, -1, -1, 1]])
+
+    # Try to factorize matrix A
+    factorize(A)
+
+    # Generate random matrix U(0,1)
+    B = generate_random_matrix((5, 5))
+
+    # Try to factorize matrix B
+    factorize(B)
 
 
 if __name__ == "__main__":
