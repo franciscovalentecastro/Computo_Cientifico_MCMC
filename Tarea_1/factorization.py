@@ -47,7 +47,7 @@ def lup_factorization(matrix):
     L = np.identity(n, dtype=np.float)
     P = np.identity(n, dtype=np.float)
 
-    # Gaussian elimination with partial pivoting
+    # Gaussian elimination with partial pivoting.
     for kdx in range(0, n - 1):
 
         # Check if there are valid pivots.
@@ -64,6 +64,7 @@ def lup_factorization(matrix):
         for jdx in range(0, kdx):
             L[kdx, jdx], L[idx_max, jdx] = L[idx_max, jdx], L[kdx, jdx]
 
+        # Use pivot row to transform vectors below.
         for jdx in range(kdx + 1, n):
             L[jdx, kdx] = U[jdx, kdx] / U[kdx, kdx]
             U[jdx, kdx:] -= U[kdx, kdx:] * L[jdx, kdx]
@@ -110,6 +111,7 @@ def factorize(matrix):
     print("LUP : ", end="\n")
     (L, U, P) = lup_factorization(A)
 
+    # If LUP factorization was returned.
     if type(L) is np.ndarray:
         print("L : ", L, sep="\n")
         print("U : ", U, sep="\n")
@@ -120,6 +122,7 @@ def factorize(matrix):
     print("LU : ", end="\n")
     (L, U) = lu_factorization(A)
 
+    # If LU factorization was returned.
     if type(L) is np.ndarray:
         print("L :", L, sep="\n")
         print("U :", U, sep="\n")
@@ -129,6 +132,7 @@ def factorize(matrix):
     print("Cholesky : ", end="\n")
     R = cholesky(A)
 
+    # If Cholesky factorization was returned.
     if type(R) is np.ndarray:
         print("R :", R, sep="\n")
         print("Cholesky factorization correct ? : ",

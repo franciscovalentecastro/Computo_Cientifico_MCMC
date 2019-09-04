@@ -45,6 +45,7 @@ def main():
         # Solve system Ax = b
         x = solve_system(A, b)
 
+        # Print solution.
         print("A : ", A, sep="\n")
         print("b : ", b)
         print("x : ", x)
@@ -56,6 +57,7 @@ def main():
         # Solve system Bx = b
         x = solve_system(B, b)
 
+        # Print solution.
         print("B : ", B, sep="\n")
         print("b : ", b)
         print("x : ", x)
