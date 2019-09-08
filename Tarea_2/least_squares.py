@@ -54,7 +54,7 @@ def least_squares_polynomial_fit(X, Y, degree):
     n = len(X)
 
     # Create Vandermonde matrix
-    X_v = np.ones((n, degree), dtype=np.longdouble)
+    X_v = np.ones((n, degree), dtype=np.float)
     for idx in range(1, degree):
         X_v[:, idx] = X * X_v[:, idx - 1]
 
@@ -73,7 +73,7 @@ def least_squares_polynomial_fit_scipy(X, Y, degree):
     n = len(X)
 
     # Create Vandermonde matrix
-    X_v = np.ones((n, degree), dtype=np.longdouble)
+    X_v = np.ones((n, degree), dtype=np.float)
     for idx in range(1, degree):
         X_v[:, idx] = X * X_v[:, idx - 1]
 
@@ -89,7 +89,7 @@ def least_squares_polynomial_fit_scipy(X, Y, degree):
 
 def generate_sin_curve_data(size, sigma):
     # Create data vectors
-    X = np.zeros(size, dtype=np.longdouble)
+    X = np.zeros(size, dtype=np.float)
     Y = np.random.normal(loc=0.0, scale=sigma, size=size)
 
     # Generate random data from curve
@@ -97,7 +97,7 @@ def generate_sin_curve_data(size, sigma):
         X[idx] = (4.0 * math.pi * float(idx)) / float(size)
         Y[idx] += math.sin(X[idx])
 
-    return (X.astype(np.longdouble), Y.astype(np.longdouble))
+    return (X.astype(np.float), Y.astype(np.float))
 
 
 def main():
@@ -116,7 +116,7 @@ def main():
 
     # Plot fit
     x_range = np.arange(0, math.pi * 4, .1)
-    y_range = np.zeros(len(x_range), dtype=np.longdouble)
+    y_range = np.zeros(len(x_range), dtype=np.float)
 
     for idx in range(0, len(x_range)):
         y_range[idx] = polynomial(x_range[idx])
