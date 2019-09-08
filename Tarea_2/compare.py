@@ -1,150 +1,106 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import sys
 import numpy as np
 import timeit
 import functools
 
 import matplotlib.pyplot as plt
 
-from substitution import *
-from factorization import *
+from least_squares import *
 
 
-def measure_factorization_time(matrix, method, number=1, **kwargs):
+def measure_least_squares_time(X, Y, degree, method, number=1, **kwargs):
     # Calculate sum of execution times of "number".
     # Return the mean of the execution time when dividing by "number".
-    return timeit.timeit(functools.partial(method, matrix),
+    return timeit.timeit(functools.partial(method, X, Y, degree),
                          number=number, **kwargs) / number
 
 
-def verify_factorization(matrix):
-    # Rename matrix
-    A = matrix.astype(np.float)
+def plot_fit(X, Y, polynomial_ls, polynomial_scipy, degree, size):
+    # Plot fit from least squares
+    x_range = np.arange(0, math.pi * 4.0, .1)
+    y_range = np.zeros(len(x_range), dtype=np.float)
 
-    # Matrix decomposition
-    (L, U, P) = lup_factorization(A)
-    R = cholesky(A)
+    for idx in range(0, len(x_range)):
+        y_range[idx] = polynomial_ls(x_range[idx])
 
-    # Compare if factorization is equal to the original matrix.
-    print("All close LUP : ", np.allclose(A, np.transpose(P) @ L @ U))
-    print("All close Cholesky : ", np.allclose(np.transpose(R) @ R, A))
-    print("All close between : ",
-          np.allclose(np.transpose(R) @ R, np.transpose(P) @ L @ U))
+    plt.subplot(1, 2, 1)
+    plt.gca().set_title('Own Algorithm deg=%d, N=%d' % (degree, size),
+                        fontsize=10)
+    plt.plot(X, Y, ".")
+    plt.plot(x_range, y_range)
 
+    # Plot polynomial from scipy module
+    y_range_scipy = np.zeros(len(x_range), dtype=np.float)
 
-def compare_execution_speed_different_size_matrices(max_size,
-                                                    debug=True,
-                                                    calculateStep=1,
-                                                    printStep=50):
+    for idx in range(0, len(x_range)):
+        y_range_scipy[idx] = polynomial_scipy(x_range[idx])
 
-    # Sample of times
-    times_cholesky = []
-    times_lup = []
+    plt.subplot(1, 2, 2)
+    plt.gca().set_title('Scipy Algorithm deg=%d, N=%d' % (degree, size),
+                        fontsize=10)
+    plt.plot(X, Y, ".")
+    plt.plot(x_range, y_range_scipy)
 
-    # Time range
-    times = range(calculateStep, max_size, calculateStep)
-
-    # Loop trough matrix sizes
-    for size in times:
-
-        # Generate random positve symetric matrix
-        A = generate_random_matrix((size, size))
-        A = A @ np.transpose(A)
-
-        # Verify if factorization was correct.
-        if debug:
-            verify_factorization(A)
-
-        # Measure factorization execution time and save in sample.
-        tCholesky = measure_factorization_time(A, cholesky)
-        times_cholesky.append(tCholesky)
-
-        tLUP = measure_factorization_time(A, lup_factorization)
-        times_lup.append(tLUP)
-
-        # Every printStep iterations show current time information.
-        if size % printStep == 0:
-            print("Matrix Size : " + str(size),
-                  "Cholesky Time : %.5f" % tCholesky,
-                  "LUP Time : %.5f" % tLUP, sep=', ')
-
-    # Fix plot size
-    plt.figure(figsize=(10, 10))
-
-    # Set axis name
-    plt.xlabel("Matrix Size")
-    plt.ylabel("Execution Time")
-
-    # Create plot and save to file.
-    plt.plot(times, times_cholesky, label="Cholesky")
-    plt.plot(times, times_lup, label="LUP")
-    plt.legend(loc='upper right')
-    plt.savefig("execution_times_graph_N=%d.png" % max_size,
-                bbox_inches='tight')
     plt.show()
 
 
-def compare_execution_speed_fixed_size_matrices(size,
-                                                sample_size,
-                                                debug=True,
-                                                printStep=50):
+def compare_execution_speed(parameters):
+
     # Sample of times
-    times_cholesky = []
-    times_lup = []
-    times_ratios = []
+    times_ls = []
+    times_scipy = []
 
-    for repetition in range(sample_size):
-        # Generate random positve symetric matrix
-        A = generate_random_matrix((size, size))
-        A = A @ np.transpose(A)
+    # Define normal distribution
+    sigma = 0.11
 
-        # Verify if factorization was correct.
-        if debug:
-            verify_factorization(A)
+    # Loop trough different polynomial degrees and sample size
+    for (degree, size) in parameters:
 
-        # Measure factorization execution time and save in sample.
-        tCholesky = measure_factorization_time(A, cholesky)
-        times_cholesky.append(tCholesky)
+        # Generate data on sin curve
+        (X, Y) = generate_sin_curve_data(size, sigma)
 
-        tLUP = measure_factorization_time(A, lup_factorization)
-        times_lup.append(tLUP)
+        # Measure least squares algorithm time using timeit
+        tLS = measure_least_squares_time(X, Y, degree,
+                                         least_squares_polynomial_fit)
+        times_ls.append(tLS)
 
-        # Calculate ratios of times.
-        times_ratios.append(tCholesky / tLUP)
+        # Get polynomial fit with the least square estimator
+        polynomial_ls = least_squares_polynomial_fit(X, Y, degree)
 
-        # Every printStep iterations show current time information.
-        if repetition % printStep == 0:
-            print("Repetition : " + str(repetition),
-                  "Cholesky Time : %.5f" % tCholesky,
-                  "LUP Time : %.5f" % tLUP, sep=', ')
+        # Measure least squares using scipy algorithm
+        tScipy = measure_least_squares_time(X, Y, degree,
+                                            least_squares_polynomial_fit_scipy)
+        times_scipy.append(tScipy)
 
-    # Plot and save histogram.
-    plt.figure(figsize=(10, 10))
-    plt.hist([times_cholesky, times_lup],
-             bins='auto', label=['cholesky', 'lup'])
-    plt.legend(loc='upper right')
-    plt.savefig("execution_times_histogram_N=%d.png" % sample_size,
-                bbox_inches='tight')
-    plt.show()
+        # Get polynomial fit with the least square estimator
+        polynomial_scipy = least_squares_polynomial_fit_scipy(X, Y, degree)
+
+        # Print times
+        print(tLS, tScipy)
+
+        # Plot both estimations
+        plot_fit(X, Y, polynomial_ls, polynomial_scipy, degree, size)
 
 
 def main():
     # Set up default parameters
-    max_size = 500
-    size = 15
-    sample_size = 500
-    debug = False
+    degrees = [3, 4, 6, 100]
+    sizes = [100, 1000, 10000]
 
-    # Receive command line parameters.
-    if len(sys.argv) > 4:
-        max_size = int(sys.argv[1])
-        size = int(sys.argv[2])
-        sample_size = int(sys.argv[3])
-        debug = True if sys.argv[4] == "True" else False
+    # Create parameters list
+    parameters = [(x, y) for x in degrees for y in sizes]
 
-    compare_execution_speed_different_size_matrices(max_size, debug)
-    compare_execution_speed_fixed_size_matrices(size, sample_size, debug)
+    compare_execution_speed(parameters)
+
+    # Create parameters p = 0.1 * n
+    parameters = []
+
+    for n in [10, 100, 1000, 10000, 100000]:
+        p = int(0.1 * n)
+        parameters.append((p, n))
+
+    compare_execution_speed(parameters)
 
 
 if __name__ == "__main__":

@@ -107,40 +107,26 @@ def cholesky(matrix):
     return R
 
 
-def factorize(matrix):
-    # Rename matrix
-    A = matrix
-    print("A :", A, sep="\n")
+def qr_factorization(matrix):
+    # Get dimensions
+    (m, n) = matrix.shape
 
-    print("LUP : ", end="\n")
-    (L, U, P) = lup_factorization(A)
+    # Rename and create matrices
+    R = np.zeros((n, n), dtype=np.float)
+    Q = matrix.astype(np.float)
 
-    # If LUP factorization was returned.
-    if type(L) is np.ndarray:
-        print("L : ", L, sep="\n")
-        print("U : ", U, sep="\n")
-        print("P : ", P, sep="\n")
-        print("LUP factorization correct ? : ",
-              np.allclose(np.transpose(P) @ L @ U, A), end="\n\n")
+    # Modified Gram-Schmidt (Trefethen pag. 58 )
+    for idx in range(0, n):
+        # Normalize ortogonal vector
+        R[idx, idx] = math.sqrt(Q[:, idx].dot(Q[:, idx]))
+        Q[:, idx] /= R[idx, idx]
 
-    print("LU : ", end="\n")
-    (L, U) = lu_factorization(A)
+        # Substract projection to q_i ortonormal vector
+        for jdx in range(idx + 1, n):
+            R[idx, jdx] = Q[:, idx].dot(Q[:, jdx])
+            Q[:, jdx] -= R[idx, jdx] * Q[:, idx]
 
-    # If LU factorization was returned.
-    if type(L) is np.ndarray:
-        print("L :", L, sep="\n")
-        print("U :", U, sep="\n")
-        print("LU factorization correct ? : ",
-              np.allclose(L @ U, A), end="\n\n")
-
-    print("Cholesky : ", end="\n")
-    R = cholesky(A)
-
-    # If Cholesky factorization was returned.
-    if type(R) is np.ndarray:
-        print("R :", R, sep="\n")
-        print("Cholesky factorization correct ? : ",
-              np.allclose(np.transpose(R) @ R, A), end="\n\n")
+    return (Q, R)
 
 
 def main():
@@ -151,21 +137,19 @@ def main():
     np.random.seed(seed)
     np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
 
-    # Create matrix A
-    A = np.matrix([[1, 0, 0, 0, 1],
-                   [-1, 1, 0, 0, 1],
-                   [-1, -1, 1, 0, 1],
-                   [-1, -1, -1, 1, 1],
-                   [-1, -1, -1, -1, 1]])
-
-    # Try to factorize matrix A
-    factorize(A)
-
     # Generate random matrix U(0,1)
     B = generate_random_matrix((5, 5))
 
-    # Try to factorize matrix B
-    factorize(B @ B.T)
+    # QR factorization
+    (Q, R) = qr_factorization(B)
+
+    print(B)
+    print(Q)
+    print(R)
+    print(Q @ R)
+
+    print("QR factorization correct ? : ",
+          np.allclose(Q @ R, B), end="\n\n")
 
 
 if __name__ == "__main__":
