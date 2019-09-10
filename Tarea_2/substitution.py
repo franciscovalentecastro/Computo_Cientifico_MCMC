@@ -32,7 +32,7 @@ def backward_substitution(upper_triangular_matrix, constant_vector):
         return -1
 
     # Backward substitution algorithm
-    x = np.zeros(n)
+    x = np.zeros(n, dtype=np.float)
     for idx in range(n - 1, -1, -1):
         x[idx] = b[idx]
         for jdx in range(idx + 1, n):
@@ -71,7 +71,7 @@ def forward_substitution(lower_triangular_matrix, constant_vector):
         return -1
 
     # Forward substitution algorithm
-    x = np.zeros(n)
+    x = np.zeros(n, dtype=np.float)
     for idx in range(0, n):
         x[idx] = b[idx]
         for jdx in range(0, idx):

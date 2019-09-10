@@ -16,17 +16,19 @@ def measure_least_squares_time(X, Y, degree, method, number=1, **kwargs):
                          number=number, **kwargs) / number
 
 
-def plot_fit(X, Y, polynomial_ls, polynomial_scipy, degree, size):
+def plot_fit(X, Y, polynomial_ls, polynomial_scipy,
+             degree, size, time_ls, time_scipy):
     # Plot fit from least squares
-    x_range = np.arange(0, math.pi * 4.0, .1)
+    epsilon = 0.01
+    x_range = np.arange(epsilon, np.pi * 4.0 - epsilon, epsilon)
     y_range = np.zeros(len(x_range), dtype=np.float)
 
     for idx in range(0, len(x_range)):
         y_range[idx] = polynomial_ls(x_range[idx])
 
     plt.subplot(1, 2, 1)
-    plt.gca().set_title('Own Algorithm deg=%d, N=%d' % (degree, size),
-                        fontsize=10)
+    plt.gca().set_title('Own Algorithm deg=%d, N=%d \n' % (degree, size) +
+                        'Execution Time=%f s' % time_ls, fontsize=10)
     plt.plot(X, Y, ".")
     plt.plot(x_range, y_range)
 
@@ -37,11 +39,12 @@ def plot_fit(X, Y, polynomial_ls, polynomial_scipy, degree, size):
         y_range_scipy[idx] = polynomial_scipy(x_range[idx])
 
     plt.subplot(1, 2, 2)
-    plt.gca().set_title('Scipy Algorithm deg=%d, N=%d' % (degree, size),
-                        fontsize=10)
+    plt.gca().set_title('Scipy Algorithm deg=%d, N=%d \n' % (degree, size) +
+                        'Execution Time=%f s' % time_scipy, fontsize=10)
     plt.plot(X, Y, ".")
     plt.plot(x_range, y_range_scipy)
-
+    # plt.savefig('comparison-Deg=%d,N=%d' % (degree, size),
+    #             bbox_inches='tight')
     plt.show()
 
 
@@ -76,16 +79,22 @@ def compare_execution_speed(parameters):
         # Get polynomial fit with the least square estimator
         polynomial_scipy = least_squares_polynomial_fit_scipy(X, Y, degree)
 
-        # Print times
-        print(tLS, tScipy)
-
         # Plot both estimations
-        plot_fit(X, Y, polynomial_ls, polynomial_scipy, degree, size)
+        plot_fit(X, Y, polynomial_ls, polynomial_scipy,
+                 degree, size, tLS, tScipy)
 
 
 def main():
+    # Get seed parameter
+    seed = 0 if len(sys.argv) == 1 else int(sys.argv[1])
+
+    # Print format to 3 decimal spaces and fix seed
+    np.random.seed(seed)
+    np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
+
     # Set up default parameters
-    degrees = [3, 4, 6, 100]
+    ##degrees = [3, 4, 6, 100]
+    degrees = [100]
     sizes = [100, 1000, 10000]
 
     # Create parameters list
@@ -96,11 +105,11 @@ def main():
     # Create parameters p = 0.1 * n
     parameters = []
 
-    for n in [10, 100, 1000, 10000, 100000]:
+    for n in [10, 100, 1000, 5000]:
         p = int(0.1 * n)
         parameters.append((p, n))
 
-    compare_execution_speed(parameters)
+    # compare_execution_speed(parameters)
 
 
 if __name__ == "__main__":

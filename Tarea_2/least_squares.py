@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 
 def polynomial_base(x, degree, coefficient):
-    value = 0
+    value = 0.0
     for idx in range(0, degree):
         value += coefficient[idx] * x**idx
     return value
@@ -18,10 +18,6 @@ def polynomial_base(x, degree, coefficient):
 def least_squares_estimator(X, Y):
     # Get QR decomposition of data matrix
     (Q, R) = qr_factorization(X)
-
-    print(Q.shape, R.shape, X.shape)
-    print("QR factorization correct ? : ",
-          np.allclose(Q @ R, X), end="\n\n")
 
     # Transform y vector
     Y_prime = Q.T @ Y.T
@@ -35,10 +31,6 @@ def least_squares_estimator(X, Y):
 def least_squares_estimator_scipy(X, Y):
     # Get QR decomposition of data matrix
     (Q, R) = linalg.qr(X, mode="economic")
-
-    print(Q.shape, R.shape, X.shape)
-    print("QR factorization correct (Scipy) ? : ",
-          np.allclose(Q @ R, X), end="\n\n")
 
     # Transform y vector
     Y_prime = Q.T @ Y.T
@@ -92,21 +84,20 @@ def generate_sin_curve_data(size, sigma):
     X = np.zeros(size, dtype=np.float)
     Y = np.random.normal(loc=0.0, scale=sigma, size=size)
 
-    # Generate random data from curve
+    # Generate random data from curve sen(4*pi*i)
     for idx in range(0, size):
-        X[idx] = (4.0 * math.pi * float(idx)) / float(size)
-        Y[idx] += math.sin(X[idx])
+        X[idx] = (4.0 * np.pi * float(idx)) / float(size)
+        Y[idx] += np.sin(X[idx])
 
     return (X.astype(np.float), Y.astype(np.float))
 
 
 def main():
-    # Print format to 3 decimal spaces
-    np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
-
+    # Set parameters
     n = 100
     sigma = 0.11
-    degree = 9
+    degree = 10
+    epsilon = .1
 
     # Generate data on sin curve
     (X, Y) = generate_sin_curve_data(n, sigma)
@@ -115,7 +106,7 @@ def main():
     polynomial = least_squares_polynomial_fit(X, Y, degree)
 
     # Plot fit
-    x_range = np.arange(0, math.pi * 4, .1)
+    x_range = np.arange(epsilon, 4 * np.pi - epsilon, epsilon)
     y_range = np.zeros(len(x_range), dtype=np.float)
 
     for idx in range(0, len(x_range)):
