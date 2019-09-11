@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"e",
+				"epsilon"
+			],
+			[
+				"if",
+				"if\tkeyword"
+			],
+			[
 				"time",
 				"time_ls"
 			],
@@ -344,29 +352,20 @@
 	"buffers":
 	[
 		{
-			"file": "Tarea_2/compare.py",
-			"settings":
-			{
-				"buffer_size": 5272,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Tarea_2/least_squares.py",
-			"settings":
-			{
-				"buffer_size": 2810,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"contents": "Lista de Cosas para hacer :\n\n- Wait for shipping things. A couple of weeks.\n- Avanzar el Prototypo de Juego.\n- Sacar fecha del TOEFL.\n\n- Programar UNet en Pytorch. Salvar mejor modelo. Hacer submit al concurso online.\n- Hacer tarea 2 de computo cientifico.\n",
 			"settings":
 			{
 				"buffer_size": 257,
 				"line_ending": "Windows",
 				"name": "Lista de Cosas para hacer :"
+			}
+		},
+		{
+			"file": "Tarea_2/least_squares.py",
+			"settings":
+			{
+				"buffer_size": 2814,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -427,8 +426,9 @@
 	],
 	"file_history":
 	[
-		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_2/substitution.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_2/compare.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_2/least_squares.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_2/substitution.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_2/factorization.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_1/compare.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_1/factorization.py",
@@ -678,66 +678,6 @@
 			[
 				{
 					"buffer": 0,
-					"file": "Tarea_2/compare.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5272,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4988,
-								4988
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1881.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "Tarea_2/least_squares.py",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 2810,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1036,
-								1036
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 399.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"semi_transient": false,
 					"settings":
 					{
@@ -761,7 +701,37 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Tarea_2/least_squares.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2814,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 855.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
