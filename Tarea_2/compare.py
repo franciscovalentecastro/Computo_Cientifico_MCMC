@@ -35,7 +35,13 @@ def plot_fit(X, Y, polynomial_ls, polynomial_scipy,
              degree, size, time_ls, time_scipy):
     # Plot fit from least squares
     epsilon = 0.05
-    x_range = np.arange(epsilon, 12 - epsilon, epsilon)
+
+    # Change ploting range in case when fit isn't good
+    if degree == 100 and size == 100:
+        x_range = np.arange(1 + epsilon, 12 - epsilon, epsilon)
+    else:
+        x_range = np.arange(epsilon, 4 * np.pi - epsilon, epsilon)
+
     y_range = np.zeros(len(x_range), dtype=np.float)
 
     for idx in range(0, len(x_range)):
@@ -58,7 +64,7 @@ def plot_fit(X, Y, polynomial_ls, polynomial_scipy,
                         'Execution Time=%f s' % time_scipy, fontsize=10)
     plt.plot(X, Y, ".")
     plt.plot(x_range, y_range_scipy)
-    plt.savefig('comparison-Deg=%d,N=%d' % (degree, size),
+    plt.savefig('comparison-P=%d,N=%d' % (degree, size),
                 bbox_inches='tight')
     plt.show()
 
@@ -66,7 +72,6 @@ def plot_fit(X, Y, polynomial_ls, polynomial_scipy,
 def plot_multiple_fit(X, Y, polynomial_fit_dictionary):
     # Plot fit from least squares
     epsilon = 0.05
-    x_range = np.arange(epsilon, 12 - epsilon, epsilon)
 
     # Plot data
     plt.plot(X, Y, ".")
@@ -74,6 +79,12 @@ def plot_multiple_fit(X, Y, polynomial_fit_dictionary):
     # Iterate through dictionary
     for key in polynomial_fit_dictionary.keys():
         (degree, size) = key
+
+        # Change ploting range in case when fit isn't good
+        if degree == 100 and size == 100:
+            x_range = np.arange(1 + epsilon, 12 - epsilon, epsilon)
+        else:
+            x_range = np.arange(epsilon, 4 * np.pi - epsilon, epsilon)
 
         # Evaluate polynomial
         y_range = np.zeros(len(x_range), dtype=np.float)
