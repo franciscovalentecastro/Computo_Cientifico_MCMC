@@ -136,6 +136,9 @@ def compare_execution_speed(parameters):
     sizes = list(set([x[1] for x in polynomial_fit_ls.keys()]))
 
     for size in sizes:
+        # Generate data on sin curve
+        (X, Y) = generate_sin_curve_data(size, sigma)
+
         # Subset of dictionary with same size
         poly_dict = {x: polynomial_fit_ls[x]
                      for x in polynomial_fit_ls.keys()
@@ -161,7 +164,7 @@ def main():
     # Create parameters p = 0.1 * n
     parameters = []
 
-    for n in [100, 1000, 2000, 2500, 2800, 2810]:
+    for n in [110, 1100, 2000, 2500, 2800, 2810]:
         p = int(0.1 * n)
         parameters.append((p, n))
 

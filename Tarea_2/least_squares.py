@@ -86,7 +86,7 @@ def generate_sin_curve_data(size, sigma):
 
     # Generate random data from curve sen(4*pi*i)
     for idx in range(0, size):
-        X[idx] = (4.0 * np.pi * float(idx)) / float(size)
+        X[idx] = (4.0 * np.pi * float(idx + 1)) / float(size)
         Y[idx] += np.sin(X[idx])
 
     return (X.astype(np.float), Y.astype(np.float))
