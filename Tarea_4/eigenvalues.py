@@ -31,7 +31,6 @@ def hessenberg_form(matrix):
         x = A[kdx + 1:m, kdx]
 
         # No need to reduce
-        print(A)
         if np.count_nonzero(x) == 0:
             continue
 
@@ -89,7 +88,6 @@ def main():
 
     # Calculate eigenvalues of symmetric matrix
     for exponent in range(1, 6):
-        break
         # Create epsilon
         epsilon = 10 ** exponent
 
@@ -103,22 +101,13 @@ def main():
 
         print("epsilon : ", epsilon)
         print("A : ", A, sep="\n")
-        print("eigs : ", np.sort(np.diag(A_k)), end="\n\n")
 
-    # Calculate eigenvalues of orotogonal matrix
-    theta = np.pi / 4.0
-    A = np.array([[np.cos(theta), -np.sin(theta), 0],
-                  [np.sin(theta), np.cos(theta), 0],
-                  [0, 0, 1]])
+        # Sort eigenvalues
+        sortedIdx = np.argsort(np.diag(A_k))
 
-    # Calculate eigenvalues
-    (A_k, Q_k) = qr_algorithm(A, iterations=100)
-
-    print("epsilon : ", 100)
-    print("A : ", A, sep="\n")
-    print("eigs : ", np.sort(np.diag(A_k)), end="\n\n")
-    print(np.linalg.eig(A))
-
+        # Print sorted eigenvalues and eigenvectors
+        print("eigenvalues : ", np.diag(A_k)[sortedIdx], end="\n")
+        print("eigenvectors : ", Q_k[:, sortedIdx], sep="\n", end="\n\n")
 
 if __name__ == "__main__":
     main()
