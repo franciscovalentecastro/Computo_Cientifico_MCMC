@@ -3,6 +3,10 @@
 import numpy as np
 
 
+def generate_random_matrix(matrix_shape):
+    return np.random.rand(*matrix_shape)
+
+
 def qr_factorization(matrix):
     # Get dimensions
     (m, n) = matrix.shape
