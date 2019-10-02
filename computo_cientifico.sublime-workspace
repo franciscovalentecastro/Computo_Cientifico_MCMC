@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"unif",
+				"uniform_sample"
+			],
+			[
+				"unir",
+				"uniform_sample"
+			],
+			[
+				"max",
+				"max-eigenvalue"
+			],
+			[
+				"fact",
+				"factoization"
+			],
+			[
 				"end",
 				"end=\"\\n\\n"
 			],
@@ -110,10 +126,6 @@
 			[
 				"t_C",
 				"tCholesky_B"
-			],
-			[
-				"max",
-				"max_eigen_values"
 			],
 			[
 				"eig",
@@ -481,40 +493,6 @@
 			}
 		},
 		{
-			"file": "Tarea_4/factorization.py",
-			"settings":
-			{
-				"buffer_size": 1316,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Tarea_4/stability.py",
-			"settings":
-			{
-				"buffer_size": 8280,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Tarea_4/eigenvalues.py",
-			"settings":
-			{
-				"buffer_size": 3157,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Tarea_3/stability.py",
-			"settings":
-			{
-				"buffer_size": 8280,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "Tarea_3/least_squares.py",
 			"settings":
 			{
@@ -523,11 +501,31 @@
 			}
 		},
 		{
-			"file": "computo_cientifico.sublime-project",
+			"file": "Tarea_3/factorization.py",
 			"settings":
 			{
-				"buffer_size": 408,
-				"line_ending": "Unix"
+				"buffer_size": 2181,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "#!/usr/bin/env python\n# -*- coding: utf-8 -*-\nimport numpy as np\nfrom scipy import linalg\n\nimport timeit\nimport argparse\nimport functools\n\nimport matplotlib.pyplot as plt\n\nfrom substitution import *\nfrom factorization import *\nfrom least_squares import *\n\n# Parser arguments\nparser = argparse.ArgumentParser(description='Compare Cholesky Factorization')\nparser.add_argument('--max-eigenvalue', '--me',\n                    type=float, default=.2, metavar='N',\n                    help='The maximum eigenvalue to pick (default: 10)')\nparser.add_argument('--print-step', '--ps',\n                    type=int, default=100, metavar='N',\n                    help='Number of steps between stats log (default: 100)')\nparser.add_argument('--generate-eigenvalues', '--ge',type=str,\n                    help='Number of steps between stats log (default: 100)')\nargs = parser.parse_args()\n\n\ndef measure_factorization_time(matrix, method, number=1, **kwargs):\n    # Calculate sum of execution times of \"number\".\n    # Return the mean of the execution time when dividing by \"number\".\n    return timeit.timeit(functools.partial(method, matrix),\n                         number=number, **kwargs) / number\n\n\ndef plot_times(times_cholesky_b, times_cholesky_b_e,\n               times_scipy_b, times_scipy_b_e, parameters):\n    x_range = range(len(times_cholesky_b))\n\n    # Plot times\n    plt.plot(x_range, times_cholesky_b, \".-\", label=\"Own Algorithm B\")\n    plt.plot(x_range, times_cholesky_b_e, \".-\", label=\"Own Algorithm Be\")\n    plt.plot(x_range, times_scipy_b, \".-\", label=\"Scipy Algorithm B\")\n    plt.plot(x_range, times_scipy_b_e, \".-\", label=\"Scipy Algorithm Be\")\n\n    # Construct plot\n    plt.legend(loc='upper right')\n    # plt.xticks(x_range, [str(x) for x in parameters])\n    # plt.yscale('log')\n    plt.savefig('execution-times-N=%d' % len(parameters), bbox_inches='tight')\n    plt.show()\n\n\ndef plot_errors(errors_a, errors_b, parameters):\n    x_range = range(len(errors_a))\n\n    # Plot error\n    plt.plot(x_range, errors_a, \".-\", label=\"Errors A\", alpha=0.7)\n    plt.plot(x_range, errors_b, \".-\", label=\"Errors B\", alpha=0.7)\n\n    # Construct plot\n    plt.legend(loc='upper right')\n    # plt.xticks(x_range, [str(x) for x in parameters])\n    plt.yscale('log')\n    plt.savefig('error-N=%d' % len(parameters), bbox_inches='tight')\n    plt.show()\n\n\ndef plot_condition(condition_b, condition_b_e, parameters):\n    x_range = range(len(condition_b))\n\n    # Plot error\n    plt.plot(x_range, condition_b_e, \".-\", label=\"Condition Be\")\n    plt.plot(x_range, condition_b, \".-\", label=\"Condition B\")\n\n    # Construct plot\n    plt.legend(loc='upper right')\n    # plt.xticks(x_range, [str(x) for x in parameters])\n    # plt.yscale('log')\n    plt.savefig('condition-N=%d' % len(parameters), bbox_inches='tight')\n    plt.show()\n\n\ndef compare_execution_speed(parameters):\n    # Sample of times\n    times_ls = []\n    times_scipy = []\n\n    # Dictionary of polynomial fit\n    polynomial_fit_ls = {}\n    polynomial_fit_scipy = {}\n\n    # Define normal distribution\n    sigma = 0.11\n\n    # Loop trough different polynomial degrees and sample size\n    for (degree, size) in parameters:\n\n        # Generate data on sin curve\n        (X, Y) = generate_sin_curve_data(size, sigma)\n\n        # Measure least squares algorithm time using timeit\n        tLS = measure_least_squares_time(X, Y, degree,\n                                         least_squares_polynomial_fit)\n        times_ls.append(tLS)\n\n        # Get polynomial fit with the least square estimator\n        polynomial_ls = least_squares_polynomial_fit(X, Y, degree)\n\n        # Measure least squares using scipy algorithm\n        tScipy = measure_least_squares_time(X, Y, degree,\n                                            least_squares_polynomial_fit_scipy)\n        times_scipy.append(tScipy)\n\n        # Get polynomial fit with the least square estimator\n        polynomial_scipy = least_squares_polynomial_fit_scipy(X, Y, degree)\n\n        # Save polynomial aproximations\n        polynomial_fit_ls[(degree, size)] = polynomial_ls\n        polynomial_fit_scipy[(degree, size)] = polynomial_scipy\n\n        # Plot both estimations\n        plot_fit(X, Y, polynomial_ls, polynomial_scipy,\n                 degree, size, tLS, tScipy)\n\n    # Multiple degrees in same plot\n    sizes = list(set([x[1] for x in polynomial_fit_ls.keys()]))\n\n    for size in sizes:\n        # Generate data on sin curve\n        (X, Y) = generate_sin_curve_data(size, sigma)\n\n        # Subset of dictionary with same size\n        poly_dict = {x: polynomial_fit_ls[x]\n                     for x in polynomial_fit_ls.keys()\n                     if x[1] == size}\n\n        # Plot multiple\n        plot_multiple_fit(X, Y, poly_dict)\n\n    # Plot execution times\n    plot_times(times_ls, times_scipy, parameters)\n\n\ndef main():\n    # Print format to 3 decimal spaces and fix seed\n    np.set_printoptions(formatter={'float': lambda x: \"{0:0.3f}\".format(x)})\n\n    # Fixed matrix parameters\n    n = 20\n    m = 50\n    matrix_shape = (n, m)\n\n    # Fixed noise distribution parameters\n    sigma = 0.11\n\n    # Generate random matrix\n    A = generate_random_matrix(matrix_shape)\n\n    # Calculate QR factorization of A\n    (Q, _) = linalg.qr(A)\n\n    # Set list of max eigenvalues\n    max_eigen_values = np.arange(1, args.max_eigenvalue)\n\n    # Sample of times list\n    times_Cholesky_B = []\n    times_Cholesky_B_epsilon = []\n    times_Scipy_B = []\n    times_Scipy_B_epsilon = []\n\n    errors_Cholesky_B = []\n    errors_Cholesky_B_epsilon = []\n    errors_Scipy_B = []\n    errors_Scipy_B_epsilon = []\n\n    condition_B = []\n    condition_B_epsilon = []\n\n    for eig_max in max_eigen_values:\n\n        # Generate linear eigenvalues\n\n        # eigen_values = np.linspace(eig_max, 1.0, n)\n\n        # Generate uniform eigenvalues\n        uniform_sample = np.random.uniform(1, eig_max, n)\n        uniform_sample[0] = 1\n        uniform_sample[n - 1] = eig_max\n        eigen_values = sorted(uniform_sample)\n\n        # Add gaussian noise to eigen values\n        size = len(eigen_values)\n        eigen_values_noisy = eigen_values + \\\n            np.random.normal(loc=0.0, scale=sigma, size=size)\n\n        # Generate diferently condition matrices\n        B = Q.T @ np.diag(eigen_values) @ Q\n        B_epsilon = Q.T @ np.diag(eigen_values_noisy) @ Q\n\n        condition_B.append(np.linalg.cond(B))\n        condition_B_epsilon.append(np.linalg.cond(B_epsilon))\n\n        tCholesky_B \\\n            = measure_factorization_time(B, cholesky_factorization)\n        tCholesky_B_epsilon \\\n            = measure_factorization_time(B_epsilon, cholesky_factorization)\n        tScipy_B \\\n            = measure_factorization_time(B, linalg.cholesky)\n        tScipy_B_epsilon \\\n            = measure_factorization_time(B_epsilon, linalg.cholesky)\n\n        times_Cholesky_B.append(tCholesky_B)\n        times_Cholesky_B_epsilon.append(tCholesky_B_epsilon)\n        times_Scipy_B.append(tScipy_B)\n        times_Scipy_B_epsilon.append(tScipy_B_epsilon)\n\n        # Measure error of factorization\n        R = cholesky_factorization(B)\n        errors_Cholesky_B.append(\n            np.linalg.norm(B - R.T @ R))\n        # print(\"Cholesky factorization correct ? : \",\n        #        np.allclose(R.T @ R, B), end=\"\\n\\n\")\n\n        R_epsilon = cholesky_factorization(B_epsilon)\n        errors_Cholesky_B_epsilon.append(\n            np.linalg.norm(B - R_epsilon.T @ R_epsilon))\n\n        R_scipy = linalg.cholesky(B)\n        errors_Scipy_B.append(\n            np.linalg.norm(B - R_scipy.T @ R_scipy))\n        # print(\"Cholesky scipy factorization correct ? : \",\n        #       np.allclose(R_scipy.T @ R_scipy, B), end=\"\\n\\n\")\n\n        R_epsilon_scipy = linalg.cholesky(B_epsilon)\n        errors_Scipy_B_epsilon.append(\n            np.linalg.norm(B - R_epsilon_scipy.T @ R_epsilon_scipy))\n\n        # Every printStep iterations show current time information.\n        if eig_max % args.print_step == 0:\n            print(\"Cond : %.5f\" % np.linalg.cond(B),\n                  \"Cholesky Time B : %.5f\" % tCholesky_B,\n                  \"Scipy Time B : %.5f\" % tScipy_B, sep=', ')\n\n    # Plot errors\n    plot_errors(errors_Cholesky_B,\n                errors_Scipy_B,\n                max_eigen_values)\n\n    plot_errors(errors_Cholesky_B_epsilon,\n                errors_Scipy_B_epsilon,\n                max_eigen_values)\n\n    plot_condition(condition_B,\n                   condition_B_epsilon,\n                   max_eigen_values)\n\n    plot_errors(np.abs(np.array(errors_Cholesky_B) -\n                       np.array(errors_Scipy_B)),\n                np.abs(np.array(errors_Cholesky_B_epsilon) -\n                       np.array(errors_Scipy_B_epsilon)),\n                max_eigen_values)\n\n    # Plot times\n    plot_times(times_Cholesky_B,\n               times_Cholesky_B_epsilon,\n               times_Scipy_B,\n               times_Scipy_B_epsilon,\n               max_eigen_values)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+			"file": "Tarea_3/compare.py",
+			"file_size": 9094,
+			"file_write_time": 132144516720460703,
+			"settings":
+			{
+				"buffer_size": 8948,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Tarea_3/substitution.py",
+			"settings":
+			{
+				"buffer_size": 3194,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -590,9 +588,13 @@
 	],
 	"file_history":
 	[
-		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_1/factorization.py",
-		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_3/least_squares.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_3/stability.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_4/factorization.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_4/stability.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_4/eigenvalues.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_3/least_squares.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/computo_cientifico.sublime-project",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_1/factorization.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_3/factorization.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_3/substitution.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_1/compare.py",
@@ -607,7 +609,6 @@
 		"/D/Users/Francisco/Documents/Programming/Métodos Numéricos/Examen 3/Problema 1/finiteDiference.cpp",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_1/README.txt",
 		"/D/Users/Francisco/Documents/Programming/Métodos Numéricos/Tarea 6/parabola.cpp",
-		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/computo_cientifico.sublime-project",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_1/substitution.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_1/solve_system.py",
 		"/D/Users/Francisco/Downloads/EsqueletosTareas2-3/Tarea2/GL3_init/main.cpp",
@@ -713,7 +714,7 @@
 	],
 	"find":
 	{
-		"height": 32.0
+		"height": 40.0
 	},
 	"find_in_files":
 	{
@@ -875,7 +876,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -903,24 +904,114 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "Tarea_4/factorization.py",
+					"file": "Tarea_3/least_squares.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1316,
+						"buffer_size": 3004,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								520,
-								520
+								1692,
+								1692
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1596.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Tarea_3/factorization.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2181,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1574,
+								1574
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 855.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Tarea_3/compare.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8948,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								839,
+								839
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Tarea_3/substitution.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3194,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								414,
+								414
 							]
 						],
 						"settings":
@@ -935,162 +1026,13 @@
 					},
 					"stack_index": 3,
 					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "Tarea_4/stability.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8280,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3892,
-								3892
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2280.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "Tarea_4/eigenvalues.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3157,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3088,
-								3088
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1741.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "Tarea_3/stability.py",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 8280,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3838.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "Tarea_3/least_squares.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3004,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2443,
-								2443
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1322.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "computo_cientifico.sublime-project",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 408,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								83,
-								83
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
 				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 32.0
+		"height": 28.0
 	},
 	"input":
 	{
@@ -1127,7 +1069,7 @@
 	"project": "computo_cientifico.sublime-project",
 	"replace":
 	{
-		"height": 60.0
+		"height": 52.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1164,8 +1106,8 @@
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": true,
-	"side_bar_width": 204.0,
+	"side_bar_visible": false,
+	"side_bar_width": 50.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
