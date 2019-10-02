@@ -9,9 +9,7 @@ import functools
 
 import matplotlib.pyplot as plt
 
-from substitution import *
 from factorization import *
-from least_squares import *
 
 # Parser arguments
 parser = argparse.ArgumentParser(description='Compare Cholesky Factorization')

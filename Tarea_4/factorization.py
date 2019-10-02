@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 
-from substitution import *
-
 
 def qr_factorization(matrix):
     # Get dimensions

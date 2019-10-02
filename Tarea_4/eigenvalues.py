@@ -70,8 +70,8 @@ def qr_algorithm(matrix, iterations=1000):
         mu = A_k[m - 1, m - 1]
 
         # Calculate QR factorization
-        # (Q, R) = qr_factorization(A_k - mu * np.identity(m))
-        (Q, R) = np.linalg.qr(A_k - mu * np.identity(m))
+        (Q, R) = qr_factorization(A_k - mu * np.identity(m))
+        # (Q, R) = np.linalg.qr(A_k - mu * np.identity(m))
 
         # Multiply by Q from the right
         A_k = R @ Q + mu * np.identity(m)
@@ -108,6 +108,7 @@ def main():
         # Print sorted eigenvalues and eigenvectors
         print("eigenvalues : ", np.diag(A_k)[sortedIdx], end="\n")
         print("eigenvectors : ", Q_k[:, sortedIdx], sep="\n", end="\n\n")
+
 
 if __name__ == "__main__":
     main()
