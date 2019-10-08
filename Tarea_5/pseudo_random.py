@@ -241,6 +241,9 @@ def main():
     # Print format to 3 decimal spaces and fix seed
     np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
 
+    # --- #
+
+    # Adaptive rejection sampling
     alpha = 2
     beta = 1
 
@@ -271,15 +274,14 @@ def main():
     plt.plot(x_range, y_density)
     plt.show()
 
+    # --- #
+
+    # Uniform sampling
     unif_01 = uniform_sampling(args.sample_size, args.seed, a=0, b=1)
     unif_23 = uniform_sampling(args.sample_size, args.seed, a=2, b=3)
     unif_78 = uniform_sampling(args.sample_size, args.seed, a=3, b=8)
 
-    # print(unif_01)
-    # print(unif_23)
-
     unif = np.concatenate((unif_01, unif_23, unif_78))
-    # print(unif)
 
     num_bins = 100
     # the histogram of the data
@@ -292,6 +294,7 @@ def main():
 
     # --- #
 
+    # Exponential sampling
     exp_1 = exponential_sampling(args.sample_size, args.seed, lmbd=1)
     exp_2 = exponential_sampling(args.sample_size, args.seed, lmbd=2)
     exp_3 = exponential_sampling(args.sample_size, args.seed, lmbd=3)
