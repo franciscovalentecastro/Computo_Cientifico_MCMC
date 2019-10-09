@@ -69,7 +69,7 @@ def main():
                                 facecolor='blue',
                                 alpha=0.5)
     plt.title('Linear Congruential Generator '
-              '(Bin size {}, N = {})'.format(len(bins), args.sample_size))
+              '({} Bins, N = {})'.format(len(bins), args.sample_size))
     plt.savefig("histogram_unif_%d.png" % args.sample_size,
                 bbox_inches='tight', pad_inches=0)
     plt.show()

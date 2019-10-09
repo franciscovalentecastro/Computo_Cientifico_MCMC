@@ -87,11 +87,15 @@ def points_of_upper_adaptive_envelope(points):
     # Refine upper envelope to only lines
     for idx, p in enumerate(points):
         if idx <= 1 or idx == len(points) - 1:
+            # Add inital and ending points
             envelope.append(p)
         elif idx > 1 and idx < len(points) - 1:
+            # Find intersection of two lines to make refinement
             coef_1 = line_coef(points[idx - 2], points[idx - 1])
             coef_2 = line_coef(p, points[idx + 1])
             intersection = line_intersection(coef_1, coef_2)
+
+            # Add refinement
             envelope.append(intersection)
             envelope.append(p)
 
@@ -148,14 +152,20 @@ def adaptive_rejection_sampling(density, points, sample_size, seed=0):
 
     # Points for the envelope
     S = points
+    print('Initial number of points in envelope : #S = %d' % len(S))
 
     # Sample array
     sample = []
     y_sample = []
 
+    # Count statistics
+    accepted = 0
+    refined = 0
+    rejected = 0
+
     # Plot initial envelopes
     plot_envelopes(density, S, points_of_upper_adaptive_envelope(S),
-                   (sample, y_sample))
+                   filename="env_ini_%d.png" % args.sample_size)
 
     # Accept #sample_size samples
     while(len(sample) < sample_size):
@@ -180,6 +190,9 @@ def adaptive_rejection_sampling(density, points, sample_size, seed=0):
             # Accept sample
             sample.append(g_sample)
             y_sample.append(rnd * upper(g_sample))
+
+            # Sum an accepted sample
+            accepted += 1
         elif rnd <= density(g_sample) / upper(g_sample):  # Accept and refine
             # Accept sample
             sample.append(g_sample)
@@ -189,14 +202,30 @@ def adaptive_rejection_sampling(density, points, sample_size, seed=0):
             S.append((g_sample, np.log(density(g_sample))))
             S.sort()
 
+            # Sum an accepted + refining sample
+            accepted += 1
+            refined += 1
+        else:
+            # Reject sample
+            rejected += 1
+
+    # Number of "refinement" points in the envelope
+    print('Number of points in envelope : #S = %d' % len(S))
+
+    # Number of sample accpeted and rejected
+    print('# Accepted = %d, # Rejected = %d, # Refined = %d' %
+          (accepted, rejected, refined))
+
     # Plot last envelope and sample
     plot_envelopes(density, S, points_of_upper_adaptive_envelope(S),
-                   (sample, y_sample))
+                   sample=(sample, y_sample),
+                   filename="env_sample_%d.png" % args.sample_size)
 
     return sample
 
 
-def plot_envelopes(density, low_env, up_env, sample, domain=(0, 10)):
+def plot_envelopes(density, low_env, up_env, sample=([], []),
+                   domain=(0, 10), filename='envelope.png'):
     def lower(x):
         return envelope(x, low_env)
 
@@ -205,7 +234,7 @@ def plot_envelopes(density, low_env, up_env, sample, domain=(0, 10)):
 
     # Slice the domain
     start, end = domain
-    x_range = np.linspace(start, end, 100)
+    x_range = np.linspace(start, end, 1000)
 
     # Evaluate functions
     y_density = [density(x) for x in x_range]
@@ -213,10 +242,15 @@ def plot_envelopes(density, low_env, up_env, sample, domain=(0, 10)):
     y_upper = [upper(x) for x in x_range]
 
     # Plot discretisation
-    plt.plot(x_range, y_density)
-    plt.plot(x_range, y_upper)
-    plt.plot(x_range, y_lower)
+    plt.plot(x_range, y_density, label='density')
+    plt.plot(x_range, y_upper, label='upper envelope')
+    plt.plot(x_range, y_lower, label='lower envelope')
     plt.scatter(sample[0], sample[1])
+    plt.legend()
+    plt.title('ARS enevelope of Gamma(2,1) '
+              '(#Envelope Points = {}, N = {})'
+              .format(len(low_env), args.sample_size))
+    plt.savefig(filename, bbox_inches='tight', pad_inches=0)
     plt.show()
 
 
@@ -224,35 +258,44 @@ def main():
     # Print format to 3 decimal spaces and fix seed
     np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
 
-    # Adaptive rejection sampling
+    # Distribution parameters
     alpha = 2
     beta = 1
 
+    # Gamma density function
     def gamma_density(x):
         d = (beta ** alpha) / math.gamma(alpha)
         d *= x ** (alpha - 1)
         d *= math.exp(-beta * x)
         return d
 
-    # Adaptive rejection sampling
-    S = np.linspace(0.1, 5, 10)
+    # Initial aproximations
+    S = np.concatenate((np.arange(.1, 3, .4), np.arange(3, 5, 1.5)))
     S = [(s, np.log(gamma_density(s))) for s in S]
+
+    # Adaptive rejection sampling
     adap = adaptive_rejection_sampling(gamma_density,
                                        S,
                                        args.sample_size,
                                        args.seed)
 
-    num_bins = 80
     # the histogram of the data
     n, bins, patches = plt.hist(adap,
-                                num_bins,
+                                'fd',
                                 density=1,
                                 facecolor='blue',
                                 alpha=0.5)
+
+    # Plot density
     x_range = np.linspace(0, 10, 100)
     y_density = [gamma_density(x) for x in x_range]
-
     plt.plot(x_range, y_density)
+
+    # Format plot
+    plt.title('ARS sample of Gamma(2,1) '
+              '({} Bins, N = {})'.format(len(bins), args.sample_size))
+    plt.savefig("histogram_sample_%d.png" % args.sample_size,
+                bbox_inches='tight', pad_inches=0)
     plt.show()
 
 
