@@ -271,6 +271,7 @@ def main():
 
     # Initial aproximations
     S = np.concatenate((np.arange(.1, 3, .4), np.arange(3, 5, 1.5)))
+    print(S)
     S = [(s, np.log(gamma_density(s))) for s in S]
 
     # Adaptive rejection sampling
