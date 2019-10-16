@@ -4,6 +4,126 @@
 		"selected_items":
 		[
 			[
+				"refine",
+				"refined"
+			],
+			[
+				"ref",
+				"refined"
+			],
+			[
+				"reje",
+				"rejected"
+			],
+			[
+				"num",
+				"num_bins"
+			],
+			[
+				"for",
+				"format\tfunction"
+			],
+			[
+				"uni",
+				"unif_01"
+			],
+			[
+				"rand",
+				"random"
+			],
+			[
+				"rna",
+				"range\tstatement"
+			],
+			[
+				"ga",
+				"gamma_density"
+			],
+			[
+				"ada",
+				"adaptive_rejection_sampling"
+			],
+			[
+				"samp",
+				"sample\tstatement"
+			],
+			[
+				"g_",
+				"g_sample"
+			],
+			[
+				"upp",
+				"uppper_adaptive_envelope"
+			],
+			[
+				"lo",
+				"lower_adaptive_envelope\tfunction"
+			],
+			[
+				"sam",
+				"sample"
+			],
+			[
+				"x_",
+				"x_position\tstatement"
+			],
+			[
+				"si",
+				"sigma"
+			],
+			[
+				"w",
+				"weight"
+			],
+			[
+				"line",
+				"line_coef\tfunction"
+			],
+			[
+				"ponit",
+				"points"
+			],
+			[
+				"e",
+				"envelope"
+			],
+			[
+				"con",
+				"construct_upper_adaptive_envelope"
+			],
+			[
+				"coe",
+				"coef_2\tstatement"
+			],
+			[
+				"coef",
+				"coef_1"
+			],
+			[
+				"env",
+				"envelope"
+			],
+			[
+				"ene",
+				"envelope"
+			],
+			[
+				"point",
+				"points"
+			],
+			[
+				"poin",
+				"points"
+			],
+			[
+				"pont",
+				"points"
+			],
+			[
+				"x",
+				"x_position"
+			],
+			[
 				"ex",
 				"exponential_sampling\tfunction"
 			],
@@ -14,10 +134,6 @@
 			[
 				"uniform",
 				"uniform_sampling"
-			],
-			[
-				"uni",
-				"unif_78"
 			],
 			[
 				"mo",
@@ -38,10 +154,6 @@
 			[
 				"comp",
 				"compare_least_squares\tfunction"
-			],
-			[
-				"con",
-				"cond_delta_X"
 			],
 			[
 				"erros",
@@ -236,10 +348,6 @@
 				"eigen_values"
 			],
 			[
-				"e",
-				"epsilon"
-			],
-			[
 				"if",
 				"if\tkeyword"
 			],
@@ -316,10 +424,6 @@
 				"size"
 			],
 			[
-				"si",
-				"sizes_list"
-			],
-			[
 				"deg",
 				"degree"
 			],
@@ -340,10 +444,6 @@
 				"y_prime"
 			],
 			[
-				"x",
-				"x_range"
-			],
-			[
 				"GE",
 				"generate_sin_curve_data\tfunction"
 			],
@@ -358,10 +458,6 @@
 			[
 				"back",
 				"backward_substitution"
-			],
-			[
-				"for",
-				"forward_substitution"
 			],
 			[
 				"lu",
@@ -418,122 +514,25 @@
 			[
 				"para",
 				"parameters"
-			],
-			[
-				"la",
-				"labels"
-			],
-			[
-				"lab",
-				"labels"
-			],
-			[
-				"image",
-				"images"
-			],
-			[
-				"pred",
-				"predicted"
-			],
-			[
-				"datae",
-				"dataset"
-			],
-			[
-				"tes",
-				"testset"
-			],
-			[
-				"tor",
-				"torch\tmodule"
-			],
-			[
-				"da",
-				"datasets"
-			],
-			[
-				"num",
-				"numpy"
-			],
-			[
-				"R",
-				"Resize"
-			],
-			[
-				"data",
-				"dataset"
-			],
-			[
-				"Pro",
-				"Probabilidades"
-			],
-			[
-				"VA",
-				"Variables"
-			],
-			[
-				"key",
-				"key2"
-			],
-			[
-				"di",
-				"divergencia"
-			],
-			[
-				"var",
-				"variable"
-			],
-			[
-				"varia",
-				"variable"
-			],
-			[
-				"va",
-				"variable"
-			],
-			[
-				"V",
-				"Value"
-			],
-			[
-				"M",
-				"ML_P"
-			],
-			[
-				"cl",
-				"calcular_probabilidades_modelo_lineal"
-			],
-			[
-				"vari",
-				"variable_1"
-			],
-			[
-				"MP",
-				"ML_P"
-			],
-			[
-				"est",
-				"estimar_modelo_independiente"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"contents": "Lista de Cosas para hacer :\n\n- Wait for shipping things. A couple of weeks.\n- Seguir brackets.\n- Avanzar el Prototypo de Juego.\n- Sacar fecha del TOEFL.\n\n- Programar UNet en Pytorch. Salvar mejor modelo. Hacer submit al concurso online.\n- Hacer tarea 5 de computo cientifico.\n",
+			"file": "Tarea_5/adaptive_rejection_sampling.py",
 			"settings":
 			{
-				"buffer_size": 276,
-				"line_ending": "Windows",
-				"name": "Lista de Cosas para hacer :"
+				"buffer_size": 8586,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Tarea_5/pseudo_random.py",
+			"file": "Tarea_5/linear_congruential_generator.py",
 			"settings":
 			{
-				"buffer_size": 3556,
-				"encoding": "UTF-8",
+				"buffer_size": 3504,
 				"line_ending": "Windows"
 			}
 		}
@@ -597,6 +596,8 @@
 	],
 	"file_history":
 	[
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_5/linear_congruential_generator.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_5/pseudo_random.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_5/random.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/computo_cientifico.sublime-project",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_4/eigenvalues.py",
@@ -722,8 +723,7 @@
 		"/C/Users/fcova/AppData/Local/Temp/RtmpGQYYmT/filebe475d91848",
 		"/D/Users/Francisco/Documents/GitHub/RipserOnR/ripser.cpp",
 		"/C/Users/fcova/AppData/Local/Temp/Rtmp48403q/file13b05bcf4752",
-		"/D/Users/Francisco/Documents/GitHub/RipserOnR/output.txt",
-		"/D/Users/Francisco/Documents/GitHub/RipserOnR/README.md"
+		"/D/Users/Francisco/Documents/GitHub/RipserOnR/output.txt"
 	],
 	"find":
 	{
@@ -743,6 +743,20 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"print",
+			", domain=(0, 10)",
+			"\"",
+			" = ",
+			"legend='lam",
+			"density=1",
+			"'f",
+			"num_bins",
+			"linear_congurent_generator",
+			"linear_congruent_generator",
+			"linear_congurent_generator",
+			"x:",
+			"len(envelope) + 2",
+			"construct_upper_adaptive_envelope",
 			"pri",
 			", linestyle='-'",
 			"light",
@@ -856,21 +870,7 @@
 			"& 0.000",
 			"]",
 			"000",
-			"[",
-			", sep=\"\\n\"",
-			"0.",
-			"range(1, max_size + 1, calculateStep)",
-			"1, max_size + 1)",
-			"prin",
-			")",
-			"[]",
-			"[i][j]",
-			"}",
-			"{",
-			"j",
-			"matrix.shape",
-			"L",
-			"x"
+			"["
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -890,52 +890,24 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+					"file": "Tarea_5/adaptive_rejection_sampling.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 276,
+						"buffer_size": 8586,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								265,
-								265
-							]
-						],
-						"settings":
-						{
-							"auto_name": "Lista de Cosas para hacer :",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "Tarea_5/pseudo_random.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3556,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1076,
-								1076
+								6555,
+								6555
 							]
 						],
 						"settings":
@@ -945,10 +917,40 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 120.0,
+						"translation.y": 4705.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Tarea_5/linear_congruential_generator.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3504,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								889,
+								889
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
