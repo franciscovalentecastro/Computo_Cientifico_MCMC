@@ -4,6 +4,210 @@
 		"selected_items":
 		[
 			[
+				"Y_",
+				"Y_max"
+			],
+			[
+				"Y",
+				"Y_smp"
+			],
+			[
+				"ori",
+				"origin"
+			],
+			[
+				"Ge",
+				"Genero_Usuario"
+			],
+			[
+				"C",
+				"Ciclo_Estacion"
+			],
+			[
+				"destin",
+				"destination"
+			],
+			[
+				"fail",
+				"fail_times"
+			],
+			[
+				"s",
+				"shape"
+			],
+			[
+				"metr",
+				"metropolis_hastings_hybrid_kernels"
+			],
+			[
+				"fa",
+				"fail_times"
+			],
+			[
+				"ste",
+				"step_4"
+			],
+			[
+				"pro",
+				"proposal_4"
+			],
+			[
+				"al",
+				"alpha_t"
+			],
+			[
+				"lm",
+				"lmbd_t"
+			],
+			[
+				"alh",
+				"alpha_t"
+			],
+			[
+				"lo",
+				"logpdf"
+			],
+			[
+				"fil",
+				"fail_times"
+			],
+			[
+				"pa",
+				"param1"
+			],
+			[
+				"fi",
+				"fail_times"
+			],
+			[
+				"prior_",
+				"prior_alpha"
+			],
+			[
+				"re",
+				"Reject"
+			],
+			[
+				"accept",
+				"Accept"
+			],
+			[
+				"x",
+				"x_p"
+			],
+			[
+				"st",
+				"step_t"
+			],
+			[
+				"log",
+				"log_proposal_t"
+			],
+			[
+				"x_p",
+				"x_prime"
+			],
+			[
+				"si",
+				"sigma_2"
+			],
+			[
+				"mu",
+				"mu_2"
+			],
+			[
+				"kern",
+				"kernel_idx"
+			],
+			[
+				"ke",
+				"kernel_idx"
+			],
+			[
+				"log_ro",
+				"log_proposal"
+			],
+			[
+				"sigma",
+				"sigma"
+			],
+			[
+				"sigm",
+				"sigma"
+			],
+			[
+				"sig",
+				"sigma_2"
+			],
+			[
+				"sim",
+				"sigma_1"
+			],
+			[
+				"prop",
+				"proposal"
+			],
+			[
+				"ti",
+				"title"
+			],
+			[
+				"ac",
+				"accpetance_ratio"
+			],
+			[
+				"trans",
+				"transition"
+			],
+			[
+				"pl",
+				"plot_random_walk"
+			],
+			[
+				"rand",
+				"random_walk"
+			],
+			[
+				"sample",
+				"sample_from_posterior"
+			],
+			[
+				"burn",
+				"burn_in"
+			],
+			[
+				"prio",
+				"prior_norm"
+			],
+			[
+				"sam",
+				"smaple"
+			],
+			[
+				"in",
+				"integrate"
+			],
+			[
+				"sampl",
+				"sample\tstatement"
+			],
+			[
+				"pos",
+				"posterior"
+			],
+			[
+				"p",
+				"pi\tmodule"
+			],
+			[
+				"samp",
+				"sample"
+			],
+			[
+				"unfi",
+				"uniform"
+			],
+			[
 				"refine",
 				"refined"
 			],
@@ -28,10 +232,6 @@
 				"unif_01"
 			],
 			[
-				"rand",
-				"random"
-			],
-			[
 				"rna",
 				"range\tstatement"
 			],
@@ -44,10 +244,6 @@
 				"adaptive_rejection_sampling"
 			],
 			[
-				"samp",
-				"sample\tstatement"
-			],
-			[
 				"g_",
 				"g_sample"
 			],
@@ -56,20 +252,8 @@
 				"uppper_adaptive_envelope"
 			],
 			[
-				"lo",
-				"lower_adaptive_envelope\tfunction"
-			],
-			[
-				"sam",
-				"sample"
-			],
-			[
 				"x_",
 				"x_position\tstatement"
-			],
-			[
-				"si",
-				"sigma"
 			],
 			[
 				"w",
@@ -120,10 +304,6 @@
 				"points"
 			],
 			[
-				"x",
-				"x_position"
-			],
-			[
 				"ex",
 				"exponential_sampling\tfunction"
 			],
@@ -162,10 +342,6 @@
 			[
 				"err",
 				"error_b4\tstatement"
-			],
-			[
-				"sigm",
-				"sigma_regression"
 			],
 			[
 				"condition",
@@ -288,10 +464,6 @@
 				"triu"
 			],
 			[
-				"sig",
-				"sigma_prime"
-			],
-			[
 				"les",
 				"least_squares_estimator"
 			],
@@ -342,197 +514,25 @@
 			[
 				"eigen",
 				"eigen_values"
-			],
-			[
-				"eign",
-				"eigen_values"
-			],
-			[
-				"if",
-				"if\tkeyword"
-			],
-			[
-				"time",
-				"time_ls"
-			],
-			[
-				"times",
-				"times_scipy"
-			],
-			[
-				"tim",
-				"time_ls"
-			],
-			[
-				"poly",
-				"poly_dict\tstatement"
-			],
-			[
-				"pol",
-				"polynomial_fit_dictionary\tparam"
-			],
-			[
-				"plo",
-				"plot_multiple_fit"
-			],
-			[
-				"po",
-				"polynomial_fit_ls"
-			],
-			[
-				"szie",
-				"sizes"
-			],
-			[
-				"titl",
-				"title_scipy"
-			],
-			[
-				"tit",
-				"title_scipy"
-			],
-			[
-				"til",
-				"title_scipy"
-			],
-			[
-				"com",
-				"compare_execution_speed"
-			],
-			[
-				"size",
-				"sizes"
-			],
-			[
-				"de",
-				"degrees\tstatement"
-			],
-			[
-				"polynomial_",
-				"polynomial_ls"
-			],
-			[
-				"times_",
-				"times_ls"
-			],
-			[
-				"degree",
-				"degree"
-			],
-			[
-				"szi",
-				"size"
-			],
-			[
-				"deg",
-				"degree"
-			],
-			[
-				"y_ra",
-				"y_range_scipy"
-			],
-			[
-				"lea",
-				"least_squares_estimator_scipy"
-			],
-			[
-				"y",
-				"y_range"
-			],
-			[
-				"y_",
-				"y_prime"
-			],
-			[
-				"GE",
-				"generate_sin_curve_data\tfunction"
-			],
-			[
-				"sampl",
-				"sample_size"
-			],
-			[
-				"all",
-				"allclose"
-			],
-			[
-				"back",
-				"backward_substitution"
-			],
-			[
-				"lu",
-				"lup_decomposition"
-			],
-			[
-				"tra",
-				"transpose\tfunction"
-			],
-			[
-				"as",
-				"astype"
-			],
-			[
-				"idx",
-				"idx_max"
-			],
-			[
-				"arg",
-				"argmax\tfunction"
-			],
-			[
-				"ba",
-				"backward_substitution"
-			],
-			[
-				"mati",
-				"matrix_shape"
-			],
-			[
-				"matrix",
-				"matrix_shape"
-			],
-			[
-				"up",
-				"upper_triangular_matrix"
-			],
-			[
-				"ke",
-				"kernel_size"
-			],
-			[
-				"out",
-				"out_channels"
-			],
-			[
-				"trai",
-				"trainset"
-			],
-			[
-				"train",
-				"train_batch"
-			],
-			[
-				"para",
-				"parameters"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "Tarea_5/adaptive_rejection_sampling.py",
+			"file": "Tarea_8/metropolis_hastings_hybrid_kernels.py",
 			"settings":
 			{
-				"buffer_size": 8586,
+				"buffer_size": 6115,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Tarea_5/linear_congruential_generator.py",
+			"file": "Tarea_8/weibull_failure_times.py",
 			"settings":
 			{
-				"buffer_size": 3504,
+				"buffer_size": 4247,
 				"line_ending": "Windows"
 			}
 		}
@@ -549,19 +549,27 @@
 		"selected_items":
 		[
 			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Install Package Control"
+			],
+			[
+				"intall",
+				"Package Control: Install Package"
+			],
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
 				"remove",
 				"Package Control: Remove Package"
 			],
 			[
 				"instal",
-				"Package Control: Install Package"
-			],
-			[
-				"ins",
-				"Package Control: Install Package"
-			],
-			[
-				"insta",
 				"Package Control: Install Package"
 			],
 			[
@@ -592,17 +600,41 @@
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_3",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_4",
-		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_5"
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_5",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_6"
 	],
 	"file_history":
 	[
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/computo_cientifico.sublime-project",
+		"/C/Users/fcova/AppData/Roaming/Sublime Text 3/Packages/Anaconda/Anaconda.sublime-settings",
+		"/D/Users/Francisco/Documents/Materias/Matematicas/Analisis_de_Datos/Concurso_Visualizacion/r/distance.R",
+		"/D/Users/Francisco/Documents/Materias/Matematicas/Analisis_de_Datos/Concurso_Visualizacion/r/join_trajectories.R",
+		"/D/Users/Francisco/Documents/Materias/Matematicas/Analisis_de_Datos/Concurso_Visualizacion/r/orig_dest.R",
+		"/D/Users/Francisco/Documents/Materias/Matematicas/Analisis_de_Datos/Concurso_Visualizacion/r/orig_dest.csv",
+		"/D/Users/Francisco/Documents/Materias/Matematicas/Analisis_de_Datos/Concurso_Visualizacion/r/origin_destination.R",
+		"/D/Users/Francisco/Documents/Materias/Matematicas/Analisis_de_Datos/Concurso_Visualizacion/data/temperature/2018_df.csv",
+		"/D/Users/Francisco/Downloads/TEMPAIRE_DIA.csv",
+		"/D/Users/Francisco/Documents/Materias/Matematicas/Analisis_de_Datos/Concurso_Visualizacion/data/usage/2018-04.csv",
+		"/D/Users/Francisco/Documents/Materias/Matematicas/Analisis_de_Datos/Concurso_Visualizacion/data/temperature/2018_df",
+		"/D/Users/Francisco/Documents/Materias/Matematicas/Analisis_de_Datos/Concurso_Visualizacion/r/2018.csv",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_8/metropolis_hastings_hybrid_kernels.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_8/weibull_failure_times.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_6/metropolis_hastings.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_6/hist_N=2000_Prop=Beta.png",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Machine_Learning/C16TAM2_CIMAT-SelectTopicsOfMachineLearning/dcgan-celeba/train.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_5/linear_congruential_generator.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_5/adaptive_rejection_sampling.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_4/factorization.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_4/eigenvalues.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_6/linear_congruential_generator.py",
+		"/D/Users/Francisco/Documents/Programming/Misc/EcoBici/stations.csv",
+		"/C/Users/fcova/AppData/Local/Temp/Temp1_Opengl-GLEW-GLFW_Triangle.zip/Opengl-GLEW-GLFW_Triangle/main.cpp",
+		"/C/Users/fcova/AppData/Local/Temp/Temp1_programas.zip/programas/VS.vs",
+		"/C/Users/fcova/AppData/Local/Temp/Temp1_programas.zip/programas/main.cpp",
+		"/C/Users/fcova/AppData/Local/Temp/Temp1_programas.zip/programas/FS.fs",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_5/pseudo_random.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_5/random.py",
-		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/computo_cientifico.sublime-project",
-		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_4/eigenvalues.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_3/substitution.py",
-		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_4/factorization.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Machine_Learning/C16TAM2_CIMAT-SelectTopicsOfMachineLearning/unet-disparity/train.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_3/compare.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_3/factorization.py",
@@ -700,34 +732,11 @@
 		"/D/Users/Francisco/Documents/GitHub/Action-RPG-Godot/ActionRPG-Ideas.txt",
 		"/D/Users/Francisco/Documents/Programming/Misc/gsm/gsm.py",
 		"/D/Users/Francisco/Documents/Programming/Misc/ackerman_function/ackerman.s",
-		"/D/Users/Francisco/Documents/Programming/Misc/ackerman.cpp",
-		"/F/boot/grub/grub.cfg",
-		"/D/Users/Francisco/Documents/GitHub/Action-RPG-Godot/art/tilesets/outdoor.tres",
-		"/D/Users/Francisco/Documents/GitHub/Godot-engine-tutorial-demos/2018/03-16-camera-2d-rig/end/characters/player.gd",
-		"/D/Users/Francisco/Documents/Materias/Matematicas/Probabilidad I/Proyecto Final/markov-generator.py",
-		"/D/Users/Francisco/Documents/Materias/Matematicas/Probabilidad I/Proyecto Final/genetic_algorithm.py",
-		"/D/Users/Francisco/Documents/Programming/Learning/testTensorflow.py",
-		"/D/Users/Francisco/Documents/Programming/Learning/tensorflowVersion.py",
-		"/D/Users/Francisco/Documents/Programming/Learning/Keras/kerasTutorial.py",
-		"/D/Users/Francisco/Documents/Programming/Learning/Keras/fashionMNIST.py",
-		"/C/Users/fcova/.keras/datasets/spa-eng/spa.txt",
-		"/D/Users/Francisco/Documents/GitHub/Godot-engine-tutorial-demos/2018/04-24-finite-state-machine/player/states/motion/motion.gd",
-		"/D/Users/Francisco/Documents/Programming/Learning/Keras/fashinMINST.py",
-		"/C/Users/fcova/AppData/Local/Packages/CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc/LocalState/rootfs/home/francisco/Documents/keras/kerasTutorial.py",
-		"/C/Users/fcova/AppData/Local/Packages/CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc/LocalState/rootfs/home/francisco/Documents/gymO.py",
-		"/D/Users/Francisco/Downloads/toro_bandas.R",
-		"/D/Users/Francisco/Downloads/GIL.R",
-		"/C/Users/fcova/AppData/Local/Packages/CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc/LocalState/rootfs/home/francisco/.kaggle/kaggle.json",
-		"/D/Users/Francisco/Documents/GitHub/RipserOnR/Ripser.R",
-		"/D/Users/Francisco/Documents/GitHub/RipserOnR/Makefile",
-		"/C/Users/fcova/AppData/Local/Temp/RtmpGQYYmT/filebe475d91848",
-		"/D/Users/Francisco/Documents/GitHub/RipserOnR/ripser.cpp",
-		"/C/Users/fcova/AppData/Local/Temp/Rtmp48403q/file13b05bcf4752",
-		"/D/Users/Francisco/Documents/GitHub/RipserOnR/output.txt"
+		"/D/Users/Francisco/Documents/Programming/Misc/ackerman.cpp"
 	],
 	"find":
 	{
-		"height": 29.0
+		"height": 28.0
 	},
 	"find_in_files":
 	{
@@ -743,6 +752,59 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"\\",
+			"print",
+			"Retiro",
+			"X201",
+			"origin",
+			"Retiro",
+			"origin",
+			"\t",
+			"s$Gene)",
+			"$Gener",
+			"Gene",
+			".25",
+			"print",
+			"# ",
+			"proposal",
+			"propoal",
+			"sample_from_posterior",
+			"stas",
+			"proposal_",
+			"rvs",
+			"lmbd_t, alpha_t = x",
+			"hybrid-normal",
+			".2",
+			".4",
+			"2",
+			"_msh",
+			"y_li",
+			"x_li",
+			"print",
+			"input",
+			"print",
+			"[1]",
+			"[2]",
+			"cution(walk,",
+			"plot_random_walk",
+			"uniform",
+			"23",
+			"0.4",
+			"0.5",
+			".3f",
+			"burn ",
+			"burn",
+			"prior",
+			"transition",
+			"args.prior",
+			"prior",
+			"accpetance_ratio",
+			"0.1",
+			"post ",
+			"post",
+			"posterior",
+			"beta",
+			"norm",
 			"print",
 			", domain=(0, 10)",
 			"\"",
@@ -817,60 +879,7 @@
 			"abs",
 			"),",
 			"_epsilon",
-			"_B",
-			"errors",
-			"_epsilon",
-			",",
-			"np.norm",
-			"error_",
-			"times",
-			"R_scipy",
-			"R",
-			"times",
-			"5",
-			")",
-			"times",
-			" = []",
-			"tCholesky_B",
-			" = []",
-			"t",
-			"\\",
-			" time ",
-			"meas",
-			"10",
-			"linal",
-			")",
-			"math",
-			"Re",
-			"Be",
-			"random",
-			"normal",
-			"deg",
-			"np.float",
-			"np.longdouble",
-			"np.float",
-			"float",
-			"np.float",
-			"))",
-			"sized",
-			"]",
-			"x :  [",
-			"]",
-			"x :  [",
-			"b :  [",
-			"b :",
-			"B :",
-			"b :",
-			"\\sav",
-			"b_",
-			"[",
-			" 0.",
-			"0.640",
-			"]",
-			"& 0.000",
-			"]",
-			"000",
-			"["
+			"_B"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -895,19 +904,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "Tarea_5/adaptive_rejection_sampling.py",
+					"file": "Tarea_8/metropolis_hastings_hybrid_kernels.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8586,
+						"buffer_size": 6115,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6555,
-								6555
+								1734,
+								1734
 							]
 						],
 						"settings":
@@ -917,7 +926,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 4705.0,
+						"translation.y": 918.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -925,19 +934,19 @@
 				},
 				{
 					"buffer": 1,
-					"file": "Tarea_5/linear_congruential_generator.py",
+					"file": "Tarea_8/weibull_failure_times.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3504,
+						"buffer_size": 4247,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								889,
-								889
+								3566,
+								3566
 							]
 						],
 						"settings":
@@ -947,7 +956,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 678.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -958,7 +967,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 29.0
+		"height": 28.0
 	},
 	"input":
 	{
@@ -995,7 +1004,7 @@
 	"project": "computo_cientifico.sublime-project",
 	"replace":
 	{
-		"height": 54.0
+		"height": 52.0
 	},
 	"save_all_on_build": true,
 	"select_file":
