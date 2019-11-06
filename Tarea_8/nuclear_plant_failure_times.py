@@ -31,26 +31,8 @@ def sample_from_posterior():
     delta = 1.0
 
     # Nuclear plant failure times data
-    n = 10
-    t = [94.32, 15.72, 62.88, 125.76, 5.24, 31.44, 1.05, 1.05, 2.1, 10.48]
-    p = [5, 1, 5, 14, 3, 18, 1, 1, 4, 22]
-
-    # Failure times
-    print(t)
-    print(p)
-
-    # Parameter priors
-    def prior_lmbd_i(x, beta, log=False):
-        if log:
-            return stats.gamma.logpdf(x, alpha, scale=1.0 / beta)
-        else:
-            return stats.gamma.pdf(x, alpha, scale=1.0 / beta)
-
-    def prior_beta(x, log=False):
-        if log:
-            return stats.gamma.logpdf(x, gamma, scale=1.0 / delta)
-        else:
-            return stats.gamma.pdf(x, gamma, scale=1.0 / delta)
+    t = [94.32, 15.72, 62.88, 125.76, 5.24, 31.44, 1.05, 1.05, 2.10, 10.48]
+    p = [5, 1, 5, 14, 3, 19, 1, 1, 4, 22]
 
     # Posterior to sample with metropolis hastings
     def posterior(x):
@@ -88,18 +70,16 @@ def sample_from_posterior():
         lmbd_t, beta_t = x
         lmbd_p, beta_p = x_prime
 
-        param1 = t[index] * p[index] + alpha
-        param2 = beta_t + 1
+        param1 = p[index] + alpha
+        param2 = t[index] + beta_t
 
         return stats.gamma.logpdf(lmbd_p[index], param1, scale=1.0 / param2)
 
     def step_lmbd_i(x, index):
         lmbd_t, beta_t = x
 
-        param1 = t[index] * p[index] + alpha
-        param2 = beta_t + 1
-
-        print(lmbd_t)
+        param1 = p[index] + alpha
+        param2 = t[index] + beta_t
 
         lmbd_p = lmbd_t.copy()
         lmbd_p[index] = stats.gamma.rvs(param1, scale=1.0 / param2)
@@ -111,7 +91,7 @@ def sample_from_posterior():
         lmbd_t, beta_t = x
         lmbd_p, beta_p = x_prime
 
-        param1 = n * alpha + gamma
+        param1 = 10 * alpha + gamma
         param2 = delta + lmbd_t.sum()
 
         return stats.gamma.logpdf(beta_p, param1, scale=1.0 / param2)
@@ -119,9 +99,7 @@ def sample_from_posterior():
     def step_beta(x):
         lmbd_t, beta_t = x
 
-        print(lmbd_t)
-
-        param1 = n * alpha + gamma
+        param1 = 10 * alpha + gamma
         param2 = delta + lmbd_t.sum()
 
         beta_p = stats.gamma.rvs(param1, scale=1.0 / param2)
@@ -130,24 +108,23 @@ def sample_from_posterior():
 
     # Acceptance Ratio
     def log_acceptance_ratio(x_p, x_t, log_posterior, log_proposal):
-        if x_p[0].any() < 0 or x_p[1] < 0:  # Out of support
+        if x_p[0].any() <= 0 or x_p[1] <= 0:  # Out of support
             return -np.inf
         else:
             return min(0, log_posterior(x_p) + log_proposal(x_p, x_t) -
                        log_posterior(x_t) - log_proposal(x_t, x_p))
 
     # Sample using Metropolis-Hastings
-    proposal = [lambda x, x_prime:proposal_lmbd_i(x, x_prime, idx)
+    proposal = [lambda x, x_prime, index=idx:proposal_lmbd_i(x, x_prime, index)
                 for idx in range(10)] + [proposal_beta]
-    step = [lambda x:step_lmbd_i(x, idx)
+    step = [lambda x, index=idx:step_lmbd_i(x, index)
             for idx in range(10)] + [step_beta]
     probs = [1.0 / 11.0] * 11
 
     # Intial value for Metropolis-Hastings
     x_init = (np.random.uniform(0, 1, 10), np.random.uniform(0, 1))
 
-    # print(x_init)
-
+    # Metropolis-Hastings execution
     (sample, walk, rejected) = \
         metropolis_hastings_hybrid_kernels(args.sample_size,
                                            x_init,
@@ -157,9 +134,13 @@ def sample_from_posterior():
                                            step,
                                            probs)
 
-    # Plot sample
-    plot_sample(sample, posterior)
-    plot_walk(sample, rejected, posterior)
+    # Plot Results
+    unpacked_walk = [tuple(list(elem[0]) + [elem[1]]) for elem in walk]
+    unpacked_sample = [tuple(list(elem[0]) + [elem[1]]) for elem in sample]
+    name = 'imgs/burn-in_nuclear_s={}_b={}.png' \
+           .format(args.sample_size, args.burn_in)
+    plot_individual_walk_mean(list(enumerate(unpacked_walk)), name)
+    plot_individual_hist(list(enumerate(unpacked_sample)), '')
 
     return sample
 

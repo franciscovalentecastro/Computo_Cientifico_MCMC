@@ -23,24 +23,93 @@ parser.add_argument('--log-interval', '--li',
 args = parser.parse_args()
 
 
-def plot_walk(walk, rejected, posterior):
+def print_rejection_statistics(count_proposals, count_rejected):
+    # Rejections per proposal
+    for idx in range(len(count_proposals)):
+        perc = 100 * count_rejected[idx] / count_proposals[idx]
+        print('Prop {} : Used {} : Rejected {}: Rej. Percent {:.2f} %'
+              .format(idx, count_proposals[idx], count_rejected[idx], perc))
+
+    # All rejections
+    perc = 100 * sum(count_rejected) / sum(count_proposals)
+    print('All : Used {} : Rejected {}: Rej. Percent {:.2f} %'
+          .format(sum(count_proposals), sum(count_rejected), perc))
+
+
+def plot_individual_hist(sample, name):
+    # Number of parameters
+    n = len(sample[0][1])
+
+    # For each parameter
+    for idx in range(n):
+        # Hist sample
+        smp = np.array([elem[1][idx] for elem in sample])
+
+        plt.hist(smp, bins=20)
+        plt.show()
+
+
+def plot_individual_walk_mean(walk, name):
+    # Number of parameters
+    n = len(walk[0][1])
+
+    # For each parameter
+    for idx in range(n):
+        # Plot walk
+        X_wlk = [elem[0] for elem in walk]
+        Y_wlk = np.array([elem[1][idx] for elem in walk])
+        Y_mean = [np.mean(Y_wlk[:idx + 1]) for idx in range(len(Y_wlk))]
+
+        plt.plot(X_wlk, Y_mean, '-', alpha=.5,
+                 label='param {}'.format(idx))
+
+    plt.legend(loc='upper right')
+    plt.savefig(name, bbox_inches='tight', pad_inches=0)
+    plt.show()
+
+
+def plot_individual_walk(walk, rejected):
+    # Number of parameters
+    n = len(walk[0][1])
+
+    # For each parameter
+    for idx in range(n):
+        # Plot walk
+        X_wlk = [elem[0] for elem in walk]
+        Y_wlk = [elem[1][idx] for elem in walk]
+
+        plt.plot(X_wlk, Y_wlk, '-', alpha=.5,
+                 label='param {}'.format(idx))
+
+        # Plot rejected
+        X_rej = [elem[0] for elem in rejected]
+        Y_rej = [elem[1][idx] for elem in rejected]
+        plt.plot(X_rej, Y_rej, 'x', alpha=.5, color='red',
+                 label='posterior density')
+
+        plt.legend(loc='best')
+        plt.show()
+
+
+def plot_walk(walk, rejected, posterior, name):
     # Plot walk
     X_wlk = [elem[0] for elem in walk]
     Y_wlk = [elem[1] for elem in walk]
     plt.plot(X_wlk, Y_wlk, '-o', alpha=.5, color='blue',
-             label='posterior density')
+             label='accepted')
 
     # Plot rejected
     X_rej = [elem[0] for elem in rejected]
     Y_rej = [elem[1] for elem in rejected]
     plt.plot(X_rej, Y_rej, 'x', alpha=.5, color='red',
-             label='posterior density')
+             label='rejected')
+    plt.legend(loc='upper right')
 
     # Get max and min of walk
-    X_max = np.max(X_wlk)
-    X_min = np.min(X_wlk)
-    Y_max = np.max(Y_wlk)
-    Y_min = np.min(Y_wlk)
+    X_max = np.max(X_wlk + X_rej)
+    X_min = np.min(X_wlk + X_rej)
+    Y_max = np.max(Y_wlk + Y_rej)
+    Y_min = np.min(Y_wlk + Y_rej)
 
     # Plot contour
     X_lin = np.linspace(X_min, X_max, 100)
@@ -58,15 +127,17 @@ def plot_walk(walk, rejected, posterior):
 
     # Plot contour map
     plt.contour(X, Y, Z, 20, cmap='RdGy')
+    plt.savefig(name, bbox_inches='tight', pad_inches=0)
     plt.show()
 
 
-def plot_sample(sample, posterior):
+def plot_sample(sample, posterior, name):
     # Plot sample
     X_smp = [elem[0] for elem in sample]
     Y_smp = [elem[1] for elem in sample]
     plt.plot(X_smp, Y_smp, 'o', alpha=.5, color='blue',
-             label='posterior density')
+             label='sample')
+    plt.legend(loc='upper right')
 
     # Get max and min of sample
     X_max = np.max(X_smp)
@@ -90,6 +161,7 @@ def plot_sample(sample, posterior):
 
     # Plot contour map
     plt.contour(X, Y, Z, 20, cmap='RdGy')
+    plt.savefig(name, bbox_inches='tight', pad_inches=0)
     plt.show()
 
 
@@ -103,6 +175,9 @@ def metropolis_hastings_hybrid_kernels(sample_size,
     # Current step
     t = 0
 
+    # Number of proposal
+    len_proposal = len(log_proposal)
+
     # Initial uniform sample
     x_t = x_initial
 
@@ -113,6 +188,10 @@ def metropolis_hastings_hybrid_kernels(sample_size,
     walk = []
     rejected = []
 
+    # Counting statistics
+    count_proposals = [0] * len_proposal
+    count_rejected = [0] * len_proposal
+
     # Init Burn-in count
     burnt = 0
 
@@ -122,41 +201,33 @@ def metropolis_hastings_hybrid_kernels(sample_size,
         walk.append(x_t)
 
         # Select transition kernel
-        kernel_idx = np.random.choice(len(log_proposal), p=kernel_probs)
-        # print(kernel_idx)
+        kernel_idx = np.random.choice(len_proposal, p=kernel_probs)
 
         log_proposal_t = log_proposal[kernel_idx]
         step_t = step[kernel_idx]
-        # print(log_proposal_t)
-        # print(step_t)
 
         # Generate random step from proposed distribution
         x_p = step_t(x_t)
-        # print(x_p)
 
         # Calculate the acceptance ratio
-        alpha = np.exp(log_acceptance_ratio(x_p, x_t,
-                                            log_posterior,
-                                            log_proposal_t))
-        # print(alpha)
+        rho = np.exp(log_acceptance_ratio(x_p, x_t,
+                                          log_posterior,
+                                          log_proposal_t))
 
         # Random uniform sample
         u = np.random.uniform()
 
-        if u < alpha:  # Accept
-            # print('Accepted')
+        if u < rho:  # Accept
             x_t = x_p
 
         else:  # Reject
-            # print('Rejected')
             if burnt == args.burn_in:
                 rejected.append(x_p)
-
-        # print(u)
-        # input()
+                count_rejected[kernel_idx] += 1
 
         if burnt == args.burn_in:  # Sample stage
             sample.append(x_t)
+            count_proposals[kernel_idx] += 1
 
             if len(sample) % args.log_interval == 0:
                 print('# Samples:', len(sample))
@@ -170,12 +241,16 @@ def metropolis_hastings_hybrid_kernels(sample_size,
         # Next step
         t += 1
 
+    # Rejection statistics
+    print_rejection_statistics(count_proposals, count_rejected)
+
     return (sample, walk, rejected)
 
 
 def sample_from_normal_posterior(rho):
     # Posterior distribution params
-    mu_1 = mu_2 = 0
+    mu_1 = -.5
+    mu_2 = .5
     sigma_1 = sigma_2 = 1
 
     # Construct vectors
@@ -236,13 +311,17 @@ def sample_from_normal_posterior(rho):
                                            [step_1, step_2],
                                            [.5, .5])
 
-    print(len(sample))
-    print(len(rejected))
-    print(len(rejected) / len(sample))
-
     # Plot sample
-    plot_sample(sample, posterior)
-    plot_walk(sample, rejected, posterior)
+    name = 'imgs/sample_normal_s={}_b={}_r={}.png'\
+           .format(args.sample_size, args.burn_in, rho)
+    plot_sample(sample, posterior, name)
+    name = 'imgs/walk_normal_s={}_b={}_r={}.png'\
+           .format(args.sample_size, args.burn_in, rho)
+    plot_walk(sample, rejected, posterior, name)
+    name = 'imgs/burn-in_normal_s={}_b={}_r={}.png'\
+           .format(args.sample_size, args.burn_in, rho)
+    plot_individual_walk_mean(list(enumerate(walk)), name)
+    plot_individual_hist(list(enumerate(sample)), '')
 
     return sample
 

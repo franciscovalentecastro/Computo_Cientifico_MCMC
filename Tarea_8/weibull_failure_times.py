@@ -31,8 +31,7 @@ def sample_from_weibull_posterior():
     n = 20
 
     # Failure times
-    fail_times = stats.weibull_min.rvs(alpha, scale=1.0 / lmbd, size=n)
-    print(fail_times)
+    t = stats.weibull_min.rvs(alpha, scale=1.0 / lmbd, size=n)
 
     # Parameter priors
     def prior_alpha(x, log=False):
@@ -50,7 +49,7 @@ def sample_from_weibull_posterior():
     # Posterior to sample with metropolis hastings
     def posterior(x):
         alpha_t, lmbd_t = x
-        likelihood = stats.weibull_min.pdf(fail_times, alpha_t,
+        likelihood = stats.weibull_min.pdf(t, alpha_t,
                                            scale=1.0 / lmbd_t)
 
         return likelihood.prod() * \
@@ -59,7 +58,7 @@ def sample_from_weibull_posterior():
 
     def log_posterior(x):
         alpha_t, lmbd_t = x
-        log_likelihood = stats.weibull_min.logpdf(fail_times, alpha_t,
+        log_likelihood = stats.weibull_min.logpdf(t, alpha_t,
                                                   scale=1.0 / lmbd_t)
 
         return log_likelihood.sum() + \
@@ -69,30 +68,36 @@ def sample_from_weibull_posterior():
     # Gamma on lmbd
     def proposal_1(x, x_prime):
         alpha_t, lmbd_t = x
-        param1 = alpha_t * n
-        param2 = b + (fail_times ** alpha_t).sum()
+        alpha_p, lmbd_p = x_prime
 
-        return stats.gamma.logpdf(lmbd_t, param1, scale=1.0 / param2)
+        param1 = alpha_t * n
+        param2 = b + (t ** alpha_t).sum()
+
+        return stats.gamma.logpdf(lmbd_p, param1, scale=1.0 / param2)
 
     def step_1(x):
         alpha_t, lmbd_t = x
+
         param1 = alpha_t * n
-        param2 = b + (fail_times ** alpha_t).sum()
+        param2 = b + (t ** alpha_t).sum()
 
         return (alpha_t, stats.gamma.rvs(param1, scale=1.0 / param2))
 
     # Gamma on alpha
     def proposal_2(x, x_prime):
         alpha_t, lmbd_t = x
-        param1 = n + 1
-        param2 = - np.log(b) - np.log(fail_times.prod()) + c
+        alpha_p, lmbd_p = x_prime
 
-        return stats.gamma.logpdf(lmbd_t, param1, scale=1.0 / param2)
+        param1 = n + 1
+        param2 = - np.log(b) - np.log(t.prod()) + c
+
+        return stats.gamma.logpdf(lmbd_p, param1, scale=1.0 / param2)
 
     def step_2(x):
         alpha_t, lmbd_t = x
+
         param1 = n + 1
-        param2 = - np.log(b) - np.log(fail_times.prod()) + c
+        param2 = - np.log(b) - np.log(t.prod()) + c
 
         return (stats.gamma.rvs(param1, scale=1.0 / param2), lmbd_t)
 
@@ -110,13 +115,13 @@ def sample_from_weibull_posterior():
         return (alpha_p, lmbd_p)
 
     # Random walk
-    sgm = 1
+    sgm = .5
 
     def proposal_4(x, x_prime):
         alpha_t, lmbd_t = x
         alpha_p, lmbd_p = x_prime
 
-        return stats.norm.pdf(alpha_p, alpha_t, sgm)
+        return stats.norm.logpdf(alpha_p, alpha_t, sgm)
 
     def step_4(x):
         alpha_t, lmbd_t = x
@@ -125,7 +130,7 @@ def sample_from_weibull_posterior():
 
     # Acceptance Ratio
     def log_acceptance_ratio(x_p, x_t, log_posterior, log_proposal):
-        if x_p[0].all() < 0 or x_p[1] < 0:  # Out of support
+        if x_p[0] <= 0 or x_p[1] <= 0:  # Out of support
             return -np.inf
         else:
             return min(0, log_posterior(x_p) + log_proposal(x_p, x_t) -
@@ -134,11 +139,12 @@ def sample_from_weibull_posterior():
     # Sample using Metropolis-Hastings
     proposal = [proposal_1, proposal_2, proposal_3, proposal_4]
     step = [step_1, step_2, step_3, step_4]
-    probs = [.25, .25, .25, .25]
+    probs = [.3, .3, .1, .3]
 
     # Intial value for Metropolis-Hastings
     x_init = (np.random.uniform(0, 1), np.random.uniform(0, 1))
 
+    # Metropolis-Hastings execution
     (sample, walk, rejected) = \
         metropolis_hastings_hybrid_kernels(args.sample_size,
                                            x_init,
@@ -149,8 +155,15 @@ def sample_from_weibull_posterior():
                                            probs)
 
     # Plot sample
-    plot_sample(sample, posterior)
-    plot_walk(sample, rejected, posterior)
+    name = 'imgs/sample_weibull_s={}_b={}.png' \
+           .format(args.sample_size, args.burn_in)
+    plot_sample(sample, posterior, name)
+    name = 'imgs/walk_weibull_s={}_b={}.png' \
+           .format(args.sample_size, args.burn_in)
+    plot_walk(sample, rejected, posterior, name)
+    name = 'imgs/burn-in_weibull_s={}_b={}.png' \
+           .format(args.sample_size, args.burn_in)
+    plot_individual_walk_mean(list(enumerate(walk)), name)
 
     return sample
 
