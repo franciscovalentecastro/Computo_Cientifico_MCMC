@@ -53,6 +53,8 @@ def plot_individual_walk_mean(walk, name):
     # Number of parameters
     n = len(walk[0][1])
 
+    means = []
+
     # For each parameter
     for idx in range(n):
         # Plot walk
@@ -62,6 +64,10 @@ def plot_individual_walk_mean(walk, name):
 
         plt.plot(X_wlk, Y_mean, '-', alpha=.5,
                  label='param {}'.format(idx))
+        means.append(np.mean(Y_wlk))
+
+    print('Converged to the following mean ')
+    print(means)
 
     plt.legend(loc='upper right')
     plt.savefig(name, bbox_inches='tight', pad_inches=0)
@@ -322,6 +328,13 @@ def sample_from_normal_posterior(rho):
            .format(args.sample_size, args.burn_in, rho)
     plot_individual_walk_mean(list(enumerate(walk)), name)
     plot_individual_hist(list(enumerate(sample)), '')
+
+    print('Kolmogorov-Smirnov test of normality :')
+    s0 = [elem[0] for elem in sample]
+    s1 = [elem[1] for elem in sample]
+
+    print(stats.kstest(s0, 'norm'))
+    print(stats.kstest(s1, 'norm'))
 
     return sample
 

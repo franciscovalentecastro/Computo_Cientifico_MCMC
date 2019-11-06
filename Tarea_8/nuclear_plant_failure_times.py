@@ -34,6 +34,8 @@ def sample_from_posterior():
     t = [94.32, 15.72, 62.88, 125.76, 5.24, 31.44, 1.05, 1.05, 2.10, 10.48]
     p = [5, 1, 5, 14, 3, 19, 1, 1, 4, 22]
 
+    print([p_i / t_i for t_i, p_i in zip(t, p)])
+
     # Posterior to sample with metropolis hastings
     def posterior(x):
         lmbd_t, beta_t = x
