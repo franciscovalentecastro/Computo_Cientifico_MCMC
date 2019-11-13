@@ -4,8 +4,6 @@ import random
 import argparse
 import pandas as pd
 import numpy as np
-from scipy import stats
-import matplotlib.pyplot as plt
 
 # Parser arguments
 parser = argparse.ArgumentParser(
@@ -15,11 +13,12 @@ parser.add_argument('--resample', '--r',
                     help='Number bootstrap samples to take. (default: 10')
 args = parser.parse_args()
 
+
 def bootstrap_sample(sample):
     # Sample size
     n = len(sample)
 
-    # Sample n elements with replacement    
+    # Sample n elements with replacement
     bsmpl = [random.choice(sample) for i in range(n)]
 
     return bsmpl
@@ -76,6 +75,7 @@ def jacknife_bias_corrected(sample, estimator):
 
     return bc_jkestimator
 
+
 def main():
     # Print format to 3 decimal spaces and fix seed
     np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
@@ -83,7 +83,7 @@ def main():
     # Excercise # 1
 
     # Gamma shape=3, scale=2. Sample from Excercise #1
-    sample = [14.18, 10.99, 3.38, 6.76, 5.56, 1.26, 4.05, 4.61, 
+    sample = [14.18, 10.99, 3.38, 6.76, 5.56, 1.26, 4.05, 4.61,
               1.78, 3.84, 4.69, 2.12, 2.39, 16.75, 4.19]
     print('Sample : {}'.format(sample), end='\n\n')
     print('Mean : {}'.format(np.mean(sample)), end='\n')
@@ -107,7 +107,7 @@ def main():
     # Define estimator
     def correlation_coef(sample):
         return np.corrcoef(sample, rowvar=False)[0, 1]
-    print('Corr Coeff : ', correlation_coef(sample)) 
+    print('Corr Coeff : ', correlation_coef(sample))
 
     # Calculate confidence interval
     ci = bootstrap_ci(sample, args.resample, correlation_coef)
@@ -115,8 +115,11 @@ def main():
     print('Percentile CI : ({}, {})'.format(*ci[1]), end='\n')
 
     # Calculate bias corrected estimator
-    bias_corrected_estimator = jacknife_bias_corrected(sample, correlation_coef)
-    print('Bias Corrected Corr Coeff : {}'.format(bias_corrected_estimator), end='\n\n')
+    bias_corrected_estimator = \
+        jacknife_bias_corrected(sample, correlation_coef)
+    print('Bias Corrected Corr Coeff : {}'
+          .format(bias_corrected_estimator), end='\n\n')
+
 
 if __name__ == "__main__":
     main()
