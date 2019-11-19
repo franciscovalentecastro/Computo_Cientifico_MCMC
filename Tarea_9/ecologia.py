@@ -208,7 +208,7 @@ def sample_problem_ecology():
     name = 'imgs/walk_ecology_s={}_b={}.png'\
            .format(args.sample_size, args.burn_in)
     plot_walk(walk, [elem[1] for elem in rejected], posterior, name)
-    name = 'imgs/burn-in_ecology_s={}_b={}.png'\
+    name = 'imgs/burn-in_ecology_s={}_b={}'\
            .format(args.sample_size, args.burn_in)
     plot_individual_walk_mean(list(enumerate(walk)), args.burn_in,
                               name, params=['N', 'p'])

@@ -31,7 +31,7 @@ def print_rejection_statistics(sample, rejected):
           .format(len(sample), len(rejected), perc))
 
 
-def plot_individual_hist(sample, name):
+def plot_individual_hist(sample, name, params=['alpha', 'beta']):
     # Number of parameters
     n = len(sample[0][1])
 
@@ -41,10 +41,14 @@ def plot_individual_hist(sample, name):
         smp = np.array([elem[1][idx] for elem in sample])
 
         plt.hist(smp, bins=20)
+        plt.title('Histogram of "{}" sample'.format(params[idx]))
+        plt.savefig('{}_{}.png'.format(name, params[idx]),
+                    bbox_inches='tight', pad_inches=0)
         plt.show()
 
 
-def plot_individual_walk_mean(walk, name):
+def plot_individual_walk_mean(walk, burn_in, name,
+                              params=['a', 'b', 'c']):
     # Number of parameters
     n = len(walk[0][1])
 
@@ -57,19 +61,23 @@ def plot_individual_walk_mean(walk, name):
         Y_wlk = np.array([elem[1][idx] for elem in walk])
         Y_mean = [np.mean(Y_wlk[:idx + 1]) for idx in range(len(Y_wlk))]
 
-        plt.plot(X_wlk, Y_mean, '-', alpha=.5,
-                 label='param {}'.format(idx))
+        plt.plot(X_wlk, Y_mean, '-', alpha=1.0,
+                 label='param {}'.format(params[idx]))
         means.append(np.mean(Y_wlk))
+
+        # Format plot
+        plt.axvline(x=burn_in, color='r', label='Burn-in')
+        plt.legend(loc='upper right')
+        plt.savefig('{}_{}.png'.format(name, params[idx]),
+                    bbox_inches='tight', pad_inches=0)
+        plt.show()
 
     print('Converged to the following mean ')
     print(means)
 
-    plt.legend(loc='upper right')
-    plt.savefig(name, bbox_inches='tight', pad_inches=0)
-    plt.show()
 
-
-def plot_individual_walk(walk, rejected):
+def plot_individual_walk(walk, rejected, burn_in,
+                         name, params=['a', 'b', 'c']):
     # Number of parameters
     n = len(walk[0][1])
 
@@ -79,16 +87,20 @@ def plot_individual_walk(walk, rejected):
         X_wlk = [elem[0] for elem in walk]
         Y_wlk = [elem[1][idx] for elem in walk]
 
-        plt.plot(X_wlk, Y_wlk, '-', alpha=.5,
-                 label='param {}'.format(idx))
+        plt.plot(X_wlk, Y_wlk, '-', alpha=1.0,
+                 label='param {}'.format(params[idx]))
 
         # Plot rejected
         X_rej = [elem[0] for elem in rejected]
         Y_rej = [elem[1][idx] for elem in rejected]
-        plt.plot(X_rej, Y_rej, 'x', alpha=.5, color='red',
-                 label='posterior density')
+        plt.plot(X_rej, Y_rej, 'x', alpha=.2, color='red',
+                 label='rejected')
 
+        # Format plot
+        plt.axvline(x=burn_in, color='r', label='Burn-in')
         plt.legend(loc='best')
+        plt.savefig('{}_{}.png'.format(name, params[idx]),
+                    bbox_inches='tight', pad_inches=0)
         plt.show()
 
 
@@ -96,13 +108,13 @@ def plot_walk(walk, rejected, posterior, name):
     # Plot walk
     X_wlk = [elem[0] for elem in walk]
     Y_wlk = [elem[1] for elem in walk]
-    plt.plot(X_wlk, Y_wlk, '-o', alpha=.5, color='blue',
+    plt.plot(X_wlk, Y_wlk, '-o', alpha=0.4, color='blue',
              label='accepted')
 
     # Plot rejected
     X_rej = [elem[0] for elem in rejected]
     Y_rej = [elem[1] for elem in rejected]
-    plt.plot(X_rej, Y_rej, 'x', alpha=.5, color='red',
+    plt.plot(X_rej, Y_rej, 'x', alpha=0.2, color='red',
              label='rejected')
     plt.legend(loc='upper right')
 
@@ -132,11 +144,11 @@ def plot_walk(walk, rejected, posterior, name):
     plt.show()
 
 
-def plot_sample(sample, posterior, name, dim=2):
+def plot_sample(sample, posterior, name, params=['alpha', 'beta']):
     # Plot sample
     X_smp = [elem[0] for elem in sample]
     Y_smp = [elem[1] for elem in sample]
-    plt.plot(X_smp, Y_smp, 'o', alpha=.5, color='blue',
+    plt.plot(X_smp, Y_smp, 'o', alpha=0.4, color='blue',
              label='sample')
     plt.legend(loc='upper right')
 
@@ -162,6 +174,8 @@ def plot_sample(sample, posterior, name, dim=2):
 
     # Plot contour map
     plt.contour(X, Y, Z, 20, cmap='RdGy')
+    plt.xlabel(params[0])
+    plt.ylabel(params[1])
     plt.savefig(name, bbox_inches='tight', pad_inches=0)
     plt.show()
 
@@ -308,10 +322,12 @@ def sample_from_problem_1(n):
     name = 'imgs/walk_prob1_s={}_b={}_n={}.png'\
            .format(args.sample_size, args.burn_in, n)
     plot_walk(sample, rejected, posterior, name)
-    name = 'imgs/burn-in_prob1_s={}_b={}_n={}.png'\
+    name = 'imgs/burn-in_prob1_s={}_b={}_n={}'\
            .format(args.sample_size, args.burn_in, n)
-    plot_individual_walk_mean(list(enumerate(walk)), name)
-    plot_individual_hist(list(enumerate(sample)), '')
+    plot_individual_walk_mean(list(enumerate(walk)), args.burn_in, name)
+    name = 'imgs/hist_prob1_s={}_b={}_n={}'\
+           .format(args.sample_size, args.burn_in, n)
+    plot_individual_hist(list(enumerate(sample)), name)
 
     return sample
 
@@ -443,11 +459,11 @@ def main():
     np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
 
     # Excercise - 1
-    # sample_from_problem_1(n=3)
-    # sample_from_problem_1(n=30)
+    sample_from_problem_1(n=3)
+    sample_from_problem_1(n=30)
 
     # Excercise - 2
-    sample_from_problem_2()
+    # sample_from_problem_2()
 
     # Excercise - 3
     # sample_from_problem_3()
