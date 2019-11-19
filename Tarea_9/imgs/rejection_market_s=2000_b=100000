@@ -1,0 +1,7 @@
+Prop 0 : Used 593 : Rejected 61: Rej. Percent 10.29 %
+Prop 1 : Used 585 : Rejected 138: Rej. Percent 23.59 %
+Prop 2 : Used 822 : Rejected 230: Rej. Percent 27.98 %
+All : Used 2000 : Rejected 429: Rej. Percent 21.45 %
+
+Converged to the following mean
+[23.487388712622728, 3.1624298746162607, 1426.1552131989615]
