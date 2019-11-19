@@ -520,19 +520,11 @@
 	"buffers":
 	[
 		{
-			"file": "Tarea_8/metropolis_hastings_hybrid_kernels.py",
+			"file": "Tarea_Bootstrap/bootstrap.py",
 			"settings":
 			{
-				"buffer_size": 6115,
+				"buffer_size": 3479,
 				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Tarea_8/weibull_failure_times.py",
-			"settings":
-			{
-				"buffer_size": 4247,
 				"line_ending": "Windows"
 			}
 		}
@@ -605,6 +597,8 @@
 	],
 	"file_history":
 	[
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_8/weibull_failure_times.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_8/metropolis_hastings_hybrid_kernels.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/computo_cientifico.sublime-project",
 		"/C/Users/fcova/AppData/Roaming/Sublime Text 3/Packages/Anaconda/Anaconda.sublime-settings",
 		"/D/Users/Francisco/Documents/Materias/Matematicas/Analisis_de_Datos/Concurso_Visualizacion/r/distance.R",
@@ -617,8 +611,6 @@
 		"/D/Users/Francisco/Documents/Materias/Matematicas/Analisis_de_Datos/Concurso_Visualizacion/data/usage/2018-04.csv",
 		"/D/Users/Francisco/Documents/Materias/Matematicas/Analisis_de_Datos/Concurso_Visualizacion/data/temperature/2018_df",
 		"/D/Users/Francisco/Documents/Materias/Matematicas/Analisis_de_Datos/Concurso_Visualizacion/r/2018.csv",
-		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_8/metropolis_hastings_hybrid_kernels.py",
-		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_8/weibull_failure_times.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_6/metropolis_hastings.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_6/hist_N=2000_Prop=Beta.png",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Machine_Learning/C16TAM2_CIMAT-SelectTopicsOfMachineLearning/dcgan-celeba/train.py",
@@ -904,19 +896,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "Tarea_8/metropolis_hastings_hybrid_kernels.py",
+					"file": "Tarea_Bootstrap/bootstrap.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6115,
+						"buffer_size": 3479,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1734,
-								1734
+								2308,
+								2308
 							]
 						],
 						"settings":
@@ -926,40 +918,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 918.0,
+						"translation.y": 1083.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "Tarea_8/weibull_failure_times.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4247,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3566,
-								3566
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 678.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
 					"type": "text"
 				}
 			]
