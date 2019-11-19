@@ -42,12 +42,6 @@ def plot_individual_hist(sample, name, params=['alpha', 'beta']):
 
         plt.hist(smp, bins=20, alpha=.6, density=True)
         plt.title('Histogram of "{}" sample'.format(params[idx]))
-        plt.axvline(x=3.7, color='green', linestyle='--',
-                    label='real alpha')
-        x = np.linspace(0, 12, 100)
-        y = stats.gamma.pdf(x, 3.7, scale=1)
-        plt.plot(x, y, color='r', linestyle='--', label='real density')
-        plt.legend(loc='best')
         plt.savefig('{}_{}.png'.format(name, params[idx]),
                     bbox_inches='tight', pad_inches=0)
         plt.show()
@@ -73,12 +67,11 @@ def plot_individual_walk_mean(walk, burn_in, name,
 
         # Format plot
         plt.axvline(x=burn_in, color='r', label='Burn-in')
-        plt.axhline(y=3.7, color='green', linestyle='--',
-                    label='real alpha')
         plt.legend(loc='upper right')
-        plt.savefig('{}_{}.png'.format(name, params[idx]),
-                    bbox_inches='tight', pad_inches=0)
-        plt.show()
+
+    plt.savefig('{}.png'.format(name),
+                bbox_inches='tight', pad_inches=0)
+    plt.show()
 
     print('Converged to the following mean ')
     print(means)
@@ -106,12 +99,11 @@ def plot_individual_walk(walk, rejected, burn_in,
 
         # Format plot
         plt.axvline(x=burn_in, color='r', label='Burn-in')
-        plt.axhline(y=3.7, color='green', linestyle='--',
-                    label='real alpha')
         plt.legend(loc='best')
-        plt.savefig('{}_{}.png'.format(name, params[idx]),
-                    bbox_inches='tight', pad_inches=0)
-        plt.show()
+
+    plt.savefig('{}.png'.format(name),
+                bbox_inches='tight', pad_inches=0)
+    plt.show()
 
 
 def plot_walk(walk, rejected, posterior, name, params=['alpha', 'beta']):
@@ -407,7 +399,7 @@ def sample_from_problem_2(x_init):
     return sample
 
 
-def sample_from_problem_3():
+def sample_from_problem_3(x_init):
     # Parametros de distribuciones
     MU = [3, 5]
     SIGMA = [[1, 0.9], [0.9, 1]]
@@ -420,7 +412,7 @@ def sample_from_problem_3():
         return stats.multivariate_normal.logpdf(x, MU, SIGMA)
 
     # Normal proposal
-    sigma = 1
+    sigma = args.sigma
 
     def proposal(x, x_prime):
         SIGMA = [[sigma ** 2, 0],
@@ -440,9 +432,6 @@ def sample_from_problem_3():
 
         return stats.multivariate_normal.rvs(x, SIGMA)
 
-    # Intial value for Metropolis-Hastings
-    x_init = (1000, 1)
-
     # Sample using Metropolis-Hastings
     (sample, walk, rejected) = metropolis_hastings(args.sample_size,
                                                    x_init,
@@ -451,16 +440,26 @@ def sample_from_problem_3():
                                                    step)
 
     # Plot sample
-    name = 'imgs/sample_prob3_s={}_b={}.png'\
-           .format(args.sample_size, args.burn_in)
-    plot_sample(sample, posterior, name)
-    name = 'imgs/walk_prob3_s={}_b={}.png'\
-           .format(args.sample_size, args.burn_in)
-    plot_walk(sample, rejected, posterior, name)
-    name = 'imgs/burn-in_prob3_s={}_b={}.png'\
-           .format(args.sample_size, args.burn_in)
-    plot_individual_walk_mean(list(enumerate(walk)), name)
-    plot_individual_hist(list(enumerate(sample)), '')
+    name = 'imgs/sample_prob3_s={}_b={}_sd={}.png'\
+           .format(args.sample_size, args.burn_in, args.sigma)
+    plot_sample(sample, posterior, name, params=['mu_1', 'mu_2'])
+    name = 'imgs/walk_prob3_s={}_b={}_sd={}.png'\
+           .format(args.sample_size, args.burn_in, args.sigma)
+    plot_walk(sample, [elem[1] for elem in rejected], posterior, name,
+              params=['mu_1', 'mu_2'])
+    name = 'imgs/burn-in_prob3_s={}_b={}_sd={}'\
+           .format(args.sample_size, args.burn_in, args.sigma)
+    plot_individual_walk_mean(list(enumerate(walk)), args.burn_in,
+                              name, params=['mu_1', 'mu_2'])
+    name = 'imgs/walk_prob3_s={}_b={}_sd={}'\
+           .format(args.sample_size, args.burn_in, args.sigma)
+    plot_individual_walk(list(enumerate(walk)), rejected,
+                         args.burn_in, name,
+                         params=['mu_1', 'mu_2'])
+    name = 'imgs/hist_prob3_s={}_b={}_sd={}'\
+           .format(args.sample_size, args.burn_in, args.sigma)
+    plot_individual_hist(list(enumerate(sample)),
+                         name, params=['mu_1', 'mu_2'])
 
     return sample
 
@@ -474,11 +473,13 @@ def main():
     # sample_from_problem_1(n=30)
 
     # Excercise - 2
-    sample_from_problem_2(x_init=np.random.uniform(3, 4))
-    sample_from_problem_2(x_init=1000)
+    # sample_from_problem_2(x_init=np.random.uniform(3, 4))
+    # sample_from_problem_2(x_init=1000)
 
     # Excercise - 3
-    # sample_from_problem_3()
+    # sample_from_problem_3(x_init=(np.random.uniform(2, 4),
+                                  # np.random.uniform(4, 6)))
+    # sample_from_problem_3(x_init=(1000, 1))
 
 
 if __name__ == "__main__":

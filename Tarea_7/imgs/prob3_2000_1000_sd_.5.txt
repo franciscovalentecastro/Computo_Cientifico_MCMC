@@ -1,0 +1,66 @@
+# Burnt: 100
+# Burnt: 200
+# Burnt: 300
+# Burnt: 400
+# Burnt: 500
+# Burnt: 600
+# Burnt: 700
+# Burnt: 800
+# Burnt: 900
+# Burnt: 1000
+# Samples: 100
+# Samples: 200
+# Samples: 300
+# Samples: 400
+# Samples: 500
+# Samples: 600
+# Samples: 700
+# Samples: 800
+# Samples: 900
+# Samples: 1000
+# Samples: 1100
+# Samples: 1200
+# Samples: 1300
+# Samples: 1400
+# Samples: 1500
+# Samples: 1600
+# Samples: 1700
+# Samples: 1800
+# Samples: 1900
+# Samples: 2000
+All : Sampled 2000 : Rejected 881: Rej. Percent 44.05 %
+Converged to the following mean 
+[3.2086389968295164, 5.209427336026172]
+# Burnt: 100
+# Burnt: 200
+# Burnt: 300
+# Burnt: 400
+# Burnt: 500
+# Burnt: 600
+# Burnt: 700
+# Burnt: 800
+# Burnt: 900
+# Burnt: 1000
+# Samples: 100
+# Samples: 200
+# Samples: 300
+# Samples: 400
+# Samples: 500
+# Samples: 600
+# Samples: 700
+# Samples: 800
+# Samples: 900
+# Samples: 1000
+# Samples: 1100
+# Samples: 1200
+# Samples: 1300
+# Samples: 1400
+# Samples: 1500
+# Samples: 1600
+# Samples: 1700
+# Samples: 1800
+# Samples: 1900
+# Samples: 2000
+All : Sampled 2000 : Rejected 1016: Rej. Percent 50.80 %
+Converged to the following mean 
+[769.1152070659964, 178.46355547960317]
