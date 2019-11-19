@@ -24,11 +24,11 @@ parser.add_argument('--log-interval', '--li',
 args = parser.parse_args()
 
 
-def print_rejection_statistics(sample, rejected):
+def print_rejection_statistics(sample, count_rejected):
     # All rejections
-    perc = 100 * len(rejected) / len(sample)
+    perc = 100 * count_rejected / len(sample)
     print('All : Sampled {} : Rejected {}: Rej. Percent {:.2f} %'
-          .format(len(sample), len(rejected), perc))
+          .format(len(sample), count_rejected, perc))
 
 
 def plot_individual_hist(sample, name, params=['alpha', 'beta']):
@@ -40,15 +40,21 @@ def plot_individual_hist(sample, name, params=['alpha', 'beta']):
         # Hist sample
         smp = np.array([elem[1][idx] for elem in sample])
 
-        plt.hist(smp, bins=20)
+        plt.hist(smp, bins=20, alpha=.6, density=True)
         plt.title('Histogram of "{}" sample'.format(params[idx]))
+        plt.axvline(x=3.7, color='green', linestyle='--',
+                    label='real alpha')
+        x = np.linspace(0, 12, 100)
+        y = stats.gamma.pdf(x, 3.7, scale=1)
+        plt.plot(x, y, color='r', linestyle='--', label='real density')
+        plt.legend(loc='best')
         plt.savefig('{}_{}.png'.format(name, params[idx]),
                     bbox_inches='tight', pad_inches=0)
         plt.show()
 
 
 def plot_individual_walk_mean(walk, burn_in, name,
-                              params=['a', 'b', 'c']):
+                              params=['alpha', 'beta']):
     # Number of parameters
     n = len(walk[0][1])
 
@@ -67,6 +73,8 @@ def plot_individual_walk_mean(walk, burn_in, name,
 
         # Format plot
         plt.axvline(x=burn_in, color='r', label='Burn-in')
+        plt.axhline(y=3.7, color='green', linestyle='--',
+                    label='real alpha')
         plt.legend(loc='upper right')
         plt.savefig('{}_{}.png'.format(name, params[idx]),
                     bbox_inches='tight', pad_inches=0)
@@ -77,7 +85,7 @@ def plot_individual_walk_mean(walk, burn_in, name,
 
 
 def plot_individual_walk(walk, rejected, burn_in,
-                         name, params=['a', 'b', 'c']):
+                         name, params=['alpha', 'beta']):
     # Number of parameters
     n = len(walk[0][1])
 
@@ -98,13 +106,15 @@ def plot_individual_walk(walk, rejected, burn_in,
 
         # Format plot
         plt.axvline(x=burn_in, color='r', label='Burn-in')
+        plt.axhline(y=3.7, color='green', linestyle='--',
+                    label='real alpha')
         plt.legend(loc='best')
         plt.savefig('{}_{}.png'.format(name, params[idx]),
                     bbox_inches='tight', pad_inches=0)
         plt.show()
 
 
-def plot_walk(walk, rejected, posterior, name):
+def plot_walk(walk, rejected, posterior, name, params=['alpha', 'beta']):
     # Plot walk
     X_wlk = [elem[0] for elem in walk]
     Y_wlk = [elem[1] for elem in walk]
@@ -140,6 +150,8 @@ def plot_walk(walk, rejected, posterior, name):
 
     # Plot contour map
     plt.contour(X, Y, Z, 20, cmap='RdGy')
+    plt.xlabel(params[0])
+    plt.ylabel(params[1])
     plt.savefig(name, bbox_inches='tight', pad_inches=0)
     plt.show()
 
@@ -207,6 +219,9 @@ def metropolis_hastings(sample_size,
     # Init Burn-in count
     burnt = 0
 
+    # Counting statistics
+    count_rejected = 0
+
     # Sample until desired number
     while len(sample) < sample_size:
         # Save random walk
@@ -227,8 +242,9 @@ def metropolis_hastings(sample_size,
             x_t = x_p
 
         else:  # Reject
+            rejected.append((t, x_p))
             if burnt == args.burn_in:
-                rejected.append(x_p)
+                count_rejected += 1
 
         if burnt == args.burn_in:  # Sample stage
             sample.append(x_t)
@@ -246,7 +262,7 @@ def metropolis_hastings(sample_size,
         t += 1
 
     # Rejection statistics
-    print_rejection_statistics(sample, rejected)
+    print_rejection_statistics(sample, count_rejected)
 
     return (sample, walk, rejected)
 
@@ -255,8 +271,8 @@ def sample_from_problem_1(n):
     # Parametros de distribuciones
     alpha = 3
     beta = 100
-    sigma_1 = .1
-    sigma_2 = .1
+    sigma_1 = args.sigma
+    sigma_2 = args.sigma * 10
 
     # Simulate from gamma(alpha = 3, beta = 100)
     gamma_sample = stats.gamma.rvs(alpha, scale=1.0 / beta, size=n)
@@ -321,10 +337,13 @@ def sample_from_problem_1(n):
     plot_sample(sample, posterior, name)
     name = 'imgs/walk_prob1_s={}_b={}_n={}.png'\
            .format(args.sample_size, args.burn_in, n)
-    plot_walk(sample, rejected, posterior, name)
+    plot_walk(sample, [elem[1] for elem in rejected], posterior, name)
     name = 'imgs/burn-in_prob1_s={}_b={}_n={}'\
            .format(args.sample_size, args.burn_in, n)
     plot_individual_walk_mean(list(enumerate(walk)), args.burn_in, name)
+    name = 'imgs/walk_prob1_s={}_b={}_n={}'\
+           .format(args.sample_size, args.burn_in, n)
+    plot_individual_walk(list(enumerate(walk)), rejected, args.burn_in, name)
     name = 'imgs/hist_prob1_s={}_b={}_n={}'\
            .format(args.sample_size, args.burn_in, n)
     plot_individual_hist(list(enumerate(sample)), name)
@@ -332,47 +351,34 @@ def sample_from_problem_1(n):
     return sample
 
 
-def sample_from_problem_2():
+def sample_from_problem_2(x_init):
     # Posterior to sample with metropolis hastings
-    alpha = 3
+    alpha = 3.7
 
     def posterior(x):
-        t, x_t = x
-        return stats.gamma.pdf(x_t, alpha, scale=1)
+        return stats.gamma.pdf(x, alpha, scale=1)
 
     def log_posterior(x):
-        t, x_t = x
-        return stats.gamma.logpdf(x_t, alpha, scale=1)
+        return stats.gamma.logpdf(x, alpha, scale=1)
 
     # Normal proposal
     def proposal(x, x_prime):
-        t, x_t = x
-        t_p, x_t_p = x_prime
-
-        interger_part = math.modf(x_t)[1]
+        interger_part = math.modf(x)[1]
         if interger_part < 1.0:
             return 0
 
-        return stats.gamma.pdf(x_t_p, interger_part, scale=1)
+        return stats.gamma.pdf(x_prime, interger_part, scale=1)
 
     def log_proposal(x, x_prime):
-        t, x_t = x
-        t_p, x_t_p = x_prime
-
-        interger_part = math.modf(x_t)[1]
+        interger_part = math.modf(x)[1]
         if interger_part < 1.0:
             return -np.inf
 
-        return stats.gamma.logpdf(x_t_p, interger_part, scale=1)
+        return stats.gamma.logpdf(x_prime, interger_part, scale=1)
 
     def step(x):
-        t, x_t = x
-
-        interger_part = math.modf(x_t)[1]
+        interger_part = math.modf(x)[1]
         return stats.gamma.rvs(interger_part, scale=1)
-
-    # Intial value for Metropolis-Hastings
-    x_init = (1, 1000)
 
     # Sample using Metropolis-Hastings
     (sample, walk, rejected) = metropolis_hastings(args.sample_size,
@@ -381,17 +387,22 @@ def sample_from_problem_2():
                                                    log_proposal,
                                                    step)
 
+    sample = [(elem,) for elem in sample]
+    walk = [(elem,) for elem in walk]
+    rejected = [(elem[0], (elem[1],)) for elem in rejected]
+
     # Plot sample
-    name = 'imgs/sample_prob2_s={}_b={}.png'\
+    name = 'imgs/burn-in_prob2_s={}_b={}'\
            .format(args.sample_size, args.burn_in)
-    plot_sample(sample, posterior, name)
-    # name = 'imgs/walk_prob2_s={}_b={}.png'\
-    #        .format(args.sample_size, args.burn_in)
-    # plot_walk(sample, rejected, posterior, name)
-    name = 'imgs/burn-in_prob2_s={}_b={}.png'\
+    plot_individual_walk_mean(list(enumerate(walk)),
+                              args.burn_in, name)
+    name = 'imgs/walk_prob2_s={}_b={}'\
            .format(args.sample_size, args.burn_in)
-    plot_individual_walk_mean(list(enumerate(walk)), name)
-    plot_individual_hist(list(enumerate(sample)), '')
+    plot_individual_walk(list(enumerate(walk)),
+                         rejected, args.burn_in, name)
+    name = 'imgs/hist_prob2_s={}_b={}'\
+           .format(args.sample_size, args.burn_in)
+    plot_individual_hist(list(enumerate(sample)), name)
 
     return sample
 
@@ -459,11 +470,12 @@ def main():
     np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
 
     # Excercise - 1
-    sample_from_problem_1(n=3)
-    sample_from_problem_1(n=30)
+    # sample_from_problem_1(n=3)
+    # sample_from_problem_1(n=30)
 
     # Excercise - 2
-    # sample_from_problem_2()
+    sample_from_problem_2(x_init=np.random.uniform(3, 4))
+    sample_from_problem_2(x_init=1000)
 
     # Excercise - 3
     # sample_from_problem_3()
