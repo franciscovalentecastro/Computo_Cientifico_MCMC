@@ -16,11 +16,14 @@ parser.add_argument('--burn_in', '--burn',
                     type=int, default=0, metavar='N',
                     help='Number of samples to drop. (default: 0')
 parser.add_argument('--sigma', '--sd',
-                    type=float, default=.1, metavar='N',
-                    help='Standard deviation of normal step (default: .1)')
+                    type=float, default=.01, metavar='N',
+                    help='Standard deviation of normal step (default: .01)')
 parser.add_argument('--log-interval', '--li',
                     type=int, default=100, metavar='N',
                     help='interval to print current status')
+parser.add_argument('--plot', '--p',
+                    action='store_true',
+                    help='plot dataset sample')
 args = parser.parse_args()
 
 
@@ -41,11 +44,15 @@ def sample_problem_ecology():
               2, 1368, 190, 0, 12, 76, 0, 0, 5, 1497, 0, 6, 533, 0, 0, 0, 0, 0,
               0, 0, 0, 1090, 0, 0, 0, 93, 0, 88, 1275, 0]
     X_smpl, Y_smpl = zip(*sorted(zip(X_smpl, Y_smpl)))
+    X_smpl = np.array(X_smpl)
+    Y_smpl = np.array(Y_smpl)
     n = len(X_smpl)
 
-    plt.plot(X_smpl, Y_smpl)
-    plt.scatter(X_smpl, Y_smpl)
-    plt.show()
+    if args.plot:
+        # Plot Y and X
+        plt.plot(X_smpl, Y_smpl)
+        plt.scatter(X_smpl, Y_smpl)
+        plt.show()
 
     # Prior distributions of a, b and c
     mu_a = 35
@@ -81,9 +88,12 @@ def sample_problem_ecology():
         a, b, c = x
 
         likelihood = [0.0] * n
-        for idx in range(n):
-            lmbd_i = link(X_smpl[i], a, b, c)
-            likelihood[idx] = stats.poisson.pmf(Y_smpl[idx], lmbd_i)
+        a_np = np.array([a] * n)
+        b_np = np.array([b] * n)
+        c_np = np.array([c] * n)
+
+        lmbd = link(X_smpl, a_np, b_np, c_np)
+        likelihood = stats.poisson.pmf(Y_smpl, lmbd)
         likelihood = np.prod(likelihood)
 
         return likelihood * prior_a(a) * prior_b(b) * prior_c(c)
@@ -92,9 +102,12 @@ def sample_problem_ecology():
         a, b, c = x
 
         log_likelihood = [0.0] * n
-        for idx in range(n):
-            lmbd_i = link(X_smpl[idx], a, b, c)
-            log_likelihood[idx] = stats.poisson.logpmf(Y_smpl[idx], lmbd_i)
+        a_np = np.array([a] * n)
+        b_np = np.array([b] * n)
+        c_np = np.array([c] * n)
+
+        lmbd = link(X_smpl, a_np, b_np, c_np)
+        log_likelihood = stats.poisson.logpmf(Y_smpl, lmbd)
         log_likelihood = np.sum(log_likelihood)
 
         return (log_likelihood + log_prior_a(a) +
@@ -129,12 +142,12 @@ def sample_problem_ecology():
         a, b, c = x
         a_prime, b_prime, c_prime = x_prime
 
-        return stats.norm.logpdf(c_prime, c, args.sigma * 100)
+        return stats.norm.logpdf(c_prime, c, args.sigma * 1000)
 
     def step_rw_c(x):
         a, b, c = x
 
-        return (a, b, stats.norm.rvs(c, args.sigma * 100))
+        return (a, b, stats.norm.rvs(c, args.sigma * 1000))
 
     # Sample using Metropolis-Hastings
     proposal = [proposal_rw_a, proposal_rw_b, proposal_rw_c]
@@ -142,9 +155,9 @@ def sample_problem_ecology():
     probs = [.3, .3, .4]
 
     # Intial value for Metropolis-Hastings
-    x_init = (np.random.uniform(34, 35),
-              np.random.uniform(10, 15),
-              np.random.uniform(1200, 1500))
+    x_init = (np.random.uniform(20, 30),
+              np.random.uniform(0, 10),
+              np.random.uniform(1300, 1500))
 
     # Sample using Metropolis-Hastings
     (sample, walk, rejected) = \
@@ -155,24 +168,38 @@ def sample_problem_ecology():
                                            step,
                                            probs)
 
-    # Plot sample
-    # name = 'imgs/sample_normal_s={}_b={}.png'\
-    #        .format(args.sample_size, args.burn_in)
-    # plot_sample(sample, posterior, name)
-    # name = 'imgs/walk_normal_s={}_b={}.png'\
-    #        .format(args.sample_size, args.burn_in)
-    # plot_walk(sample, rejected, posterior, name)
-    name = 'imgs/burn-in_normal_s={}_b={}.png'\
+    # Plot sample ab
+    sample_ab = [(elem[0], elem[1]) for elem in sample]
+    name = 'imgs/sample_market_ab_s={}_b={}.png'\
            .format(args.sample_size, args.burn_in)
-    plot_individual_walk_mean(list(enumerate(walk)), name)
-    plot_individual_hist(list(enumerate(sample)), '')
-
-    print('Kolmogorov-Smirnov test of normality :')
-    s0 = [elem[0] for elem in sample]
-    s1 = [elem[1] for elem in sample]
-
-    print(stats.kstest(s0, 'norm'))
-    print(stats.kstest(s1, 'norm'))
+    plot_sample(sample_ab, lambda x: posterior((x[0], x[1], 1400)),
+                name, params=['a', 'b'])
+    # Plot sample bc
+    sample_bc = [(elem[1], elem[2]) for elem in sample]
+    name = 'imgs/sample_market_bc_s={}_b={}.png'\
+           .format(args.sample_size, args.burn_in)
+    plot_sample(sample_bc, lambda x: posterior((24, x[0], x[1])),
+                name, params=['b', 'c'])
+    # Plot sample ac
+    sample_ac = [(elem[0], elem[2]) for elem in sample]
+    name = 'imgs/sample_market_ac_s={}_b={}.png'\
+           .format(args.sample_size, args.burn_in)
+    plot_sample(sample_ac, lambda x: posterior((x[0], 4, x[1])),
+                name, params=['a', 'c'])
+    # Plot burn-in
+    name = 'imgs/burn-in_market_s={}_b={}.png'\
+           .format(args.sample_size, args.burn_in)
+    plot_individual_walk_mean(list(enumerate(walk)),
+                              args.burn_in, name)
+    # Plot walk
+    name = 'imgs/walk_market_s={}_b={}'\
+           .format(args.sample_size, args.burn_in)
+    plot_individual_walk(list(enumerate(walk)), rejected,
+                         args.burn_in, name)
+    # Plot hist
+    name = 'imgs/hist_market_s={}_b={}'\
+           .format(args.sample_size, args.burn_in)
+    plot_individual_hist(list(enumerate(sample)), name)
 
     return sample
 

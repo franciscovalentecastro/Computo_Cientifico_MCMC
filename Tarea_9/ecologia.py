@@ -44,10 +44,10 @@ def sample_problem_ecology():
         return stats.beta.logpdf(x, alpha, beta)
 
     def prior_N(x):
-        #if x not in elements:
-        #    return 0.0
-        #else:
-        return 1.0 / (N_max + 1.0)
+        if x not in elements:
+            return 0.
+        else:
+            return 1.0 / (N_max + 1.0)
 
     def log_prior_N(x):
         if x not in elements:
@@ -202,16 +202,19 @@ def sample_problem_ecology():
                                            probs)
 
     # Plot sample
-    name = 'imgs/sample_normal_s={}_b={}.png'\
+    name = 'imgs/sample_ecology_s={}_b={}.png'\
            .format(args.sample_size, args.burn_in)
-    plot_sample(sample, posterior, name)
-    name = 'imgs/walk_normal_s={}_b={}.png'\
+    plot_sample(sample, posterior, name, params=['N', 'p'])
+    name = 'imgs/walk_ecology_s={}_b={}.png'\
            .format(args.sample_size, args.burn_in)
-    plot_walk(sample, rejected, posterior, name)
-    name = 'imgs/burn-in_normal_s={}_b={}.png'\
+    plot_walk(walk, [elem[1] for elem in rejected], posterior, name)
+    name = 'imgs/burn-in_ecology_s={}_b={}.png'\
            .format(args.sample_size, args.burn_in)
-    plot_individual_walk_mean(list(enumerate(walk)), name)
-    plot_individual_hist(list(enumerate(sample)), '')
+    plot_individual_walk_mean(list(enumerate(walk)), args.burn_in,
+                              name, params=['N', 'p'])
+    name = 'imgs/hist_ecology_s={}_b={}'\
+           .format(args.sample_size, args.burn_in)
+    plot_individual_hist(list(enumerate(sample)), name, params=['N', 'p'])
 
     return sample
 

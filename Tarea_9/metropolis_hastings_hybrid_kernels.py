@@ -36,7 +36,7 @@ def print_rejection_statistics(count_proposals, count_rejected):
           .format(sum(count_proposals), sum(count_rejected), perc))
 
 
-def plot_individual_hist(sample, name):
+def plot_individual_hist(sample, name, params=['a', 'b', 'c']):
     # Number of parameters
     n = len(sample[0][1])
 
@@ -46,10 +46,14 @@ def plot_individual_hist(sample, name):
         smp = np.array([elem[1][idx] for elem in sample])
 
         plt.hist(smp, bins=20)
+        plt.title('Histogram of "{}" sample'.format(params[idx]))
+        plt.savefig('{}_{}.png'.format(name, params[idx]),
+                    bbox_inches='tight', pad_inches=0)
         plt.show()
 
 
-def plot_individual_walk_mean(walk, name):
+def plot_individual_walk_mean(walk, burn_in, name,
+                              params=['a', 'b', 'c']):
     # Number of parameters
     n = len(walk[0][1])
 
@@ -62,19 +66,23 @@ def plot_individual_walk_mean(walk, name):
         Y_wlk = np.array([elem[1][idx] for elem in walk])
         Y_mean = [np.mean(Y_wlk[:idx + 1]) for idx in range(len(Y_wlk))]
 
-        plt.plot(X_wlk, Y_mean, '-', alpha=.5,
-                 label='param {}'.format(idx))
+        plt.plot(X_wlk, Y_mean, '-', alpha=1.0,
+                 label='param {}'.format(params[idx]))
         means.append(np.mean(Y_wlk))
+
+        # Format plot
+        plt.axvline(x=burn_in, color='r', label='Burn-in')
+        plt.legend(loc='upper right')
+        plt.savefig('{}_{}.png'.format(name, params[idx]),
+                    bbox_inches='tight', pad_inches=0)
+        plt.show()
 
     print('Converged to the following mean ')
     print(means)
 
-    plt.legend(loc='upper right')
-    plt.savefig(name, bbox_inches='tight', pad_inches=0)
-    plt.show()
 
-
-def plot_individual_walk(walk, rejected):
+def plot_individual_walk(walk, rejected, burn_in,
+                         name, params=['a', 'b', 'c']):
     # Number of parameters
     n = len(walk[0][1])
 
@@ -84,16 +92,20 @@ def plot_individual_walk(walk, rejected):
         X_wlk = [elem[0] for elem in walk]
         Y_wlk = [elem[1][idx] for elem in walk]
 
-        plt.plot(X_wlk, Y_wlk, '-', alpha=.5,
-                 label='param {}'.format(idx))
+        plt.plot(X_wlk, Y_wlk, '-', alpha=1.0,
+                 label='param {}'.format(params[idx]))
 
         # Plot rejected
         X_rej = [elem[0] for elem in rejected]
         Y_rej = [elem[1][idx] for elem in rejected]
-        plt.plot(X_rej, Y_rej, 'x', alpha=.5, color='red',
-                 label='posterior density')
+        plt.plot(X_rej, Y_rej, 'x', alpha=.2, color='red',
+                 label='rejected')
 
+        # Format plot
+        plt.axvline(x=burn_in, color='r', label='Burn-in')
         plt.legend(loc='best')
+        plt.savefig('{}_{}.png'.format(name, params[idx]),
+                    bbox_inches='tight', pad_inches=0)
         plt.show()
 
 
@@ -101,13 +113,13 @@ def plot_walk(walk, rejected, posterior, name):
     # Plot walk
     X_wlk = [elem[0] for elem in walk]
     Y_wlk = [elem[1] for elem in walk]
-    plt.plot(X_wlk, Y_wlk, '-o', alpha=.5, color='blue',
+    plt.plot(X_wlk, Y_wlk, '-o', alpha=0.4, color='blue',
              label='accepted')
 
     # Plot rejected
     X_rej = [elem[0] for elem in rejected]
     Y_rej = [elem[1] for elem in rejected]
-    plt.plot(X_rej, Y_rej, 'x', alpha=.5, color='red',
+    plt.plot(X_rej, Y_rej, 'x', alpha=0.2, color='red',
              label='rejected')
     plt.legend(loc='upper right')
 
@@ -137,11 +149,11 @@ def plot_walk(walk, rejected, posterior, name):
     plt.show()
 
 
-def plot_sample(sample, posterior, name):
+def plot_sample(sample, posterior, name, params=['a', 'b']):
     # Plot sample
     X_smp = [elem[0] for elem in sample]
     Y_smp = [elem[1] for elem in sample]
-    plt.plot(X_smp, Y_smp, 'o', alpha=.5, color='blue',
+    plt.plot(X_smp, Y_smp, 'o', alpha=0.4, color='blue',
              label='sample')
     plt.legend(loc='upper right')
 
@@ -152,8 +164,8 @@ def plot_sample(sample, posterior, name):
     Y_min = np.min(Y_smp)
 
     # Plot contour
-    X_lin = np.linspace(X_min, X_max, 200)
-    Y_lin = np.linspace(Y_max, Y_min, 200)
+    X_lin = np.linspace(X_min, X_max, 100)
+    Y_lin = np.linspace(Y_max, Y_min, 100)
 
     # Create grid
     X, Y = np.meshgrid(X_lin, Y_lin, indexing='xy')
@@ -167,6 +179,8 @@ def plot_sample(sample, posterior, name):
 
     # Plot contour map
     plt.contour(X, Y, Z, 20, cmap='RdGy')
+    plt.xlabel(params[0])
+    plt.ylabel(params[1])
     plt.savefig(name, bbox_inches='tight', pad_inches=0)
     plt.show()
 
@@ -232,8 +246,8 @@ def metropolis_hastings_hybrid_kernels(sample_size,
             x_t = x_p
 
         else:  # Reject
+            rejected.append((t, x_p))
             if burnt == args.burn_in:
-                rejected.append(x_p)
                 count_rejected[kernel_idx] += 1
 
         if burnt == args.burn_in:  # Sample stage
