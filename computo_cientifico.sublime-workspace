@@ -4,12 +4,156 @@
 		"selected_items":
 		[
 			[
-				"Y_",
-				"Y_max"
+				"param",
+				"params\tparam"
+			],
+			[
+				"lis",
+				"linestyle"
+			],
+			[
+				"coutn",
+				"count_rejected\tstatement"
+			],
+			[
+				"x_",
+				"x_init"
+			],
+			[
+				"sig",
+				"sigma"
+			],
+			[
+				"re",
+				"rejected\tparam"
+			],
+			[
+				"bur",
+				"burn_in\tparam"
+			],
+			[
+				"a",
+				"array"
 			],
 			[
 				"Y",
-				"Y_smp"
+				"Y_smpl\tstatement"
+			],
+			[
+				"sa",
+				"sample"
+			],
+			[
+				"step_",
+				"step_both_rw\tfunction"
+			],
+			[
+				"prop",
+				"proposal_both_rw\tfunction"
+			],
+			[
+				"ste",
+				"step_both_rw\tfunction"
+			],
+			[
+				"propo",
+				"proposal_both_rw\tfunction"
+			],
+			[
+				"bet",
+				"beta_t\tstatement"
+			],
+			[
+				"alp",
+				"alpha_t\tstatement"
+			],
+			[
+				"log_",
+				"log_proposal\tparam"
+			],
+			[
+				"pr",
+				"proposal_rw_c\tfunction"
+			],
+			[
+				"pro",
+				"proposal_rw_b\tfunction"
+			],
+			[
+				"prio",
+				"prior_c\tfunction"
+			],
+			[
+				"lmd",
+				"lmbd_i\tstatement"
+			],
+			[
+				"X",
+				"X_smpl\tstatement"
+			],
+			[
+				"sd",
+				"sd_a"
+			],
+			[
+				"elem",
+				"elements"
+			],
+			[
+				"samp",
+				"sample\tstatement"
+			],
+			[
+				"N_",
+				"N_prime\tstatement"
+			],
+			[
+				"gam",
+				"gamma\tstatement"
+			],
+			[
+				"N",
+				"N_max\tstatement"
+			],
+			[
+				"lod",
+				"logpdf\tfunction"
+			],
+			[
+				"sample_",
+				"sample_problem_ecology\tfunction"
+			],
+			[
+				"metro",
+				"metropolis_hastings_hybrid_kernels\tmodule"
+			],
+			[
+				"x_t",
+				"x_t_p\tstatement"
+			],
+			[
+				"al",
+				"alpha\tstatement"
+			],
+			[
+				"inte",
+				"interger_part\tstatement"
+			],
+			[
+				"sampl",
+				"sample_from_problem_3\tfunction"
+			],
+			[
+				"Si",
+				"SIGMA\tstatement"
+			],
+			[
+				"sam",
+				"sample_from_problem_1"
+			],
+			[
+				"Y_",
+				"Y_max"
 			],
 			[
 				"ori",
@@ -44,18 +188,6 @@
 				"fail_times"
 			],
 			[
-				"ste",
-				"step_4"
-			],
-			[
-				"pro",
-				"proposal_4"
-			],
-			[
-				"al",
-				"alpha_t"
-			],
-			[
 				"lm",
 				"lmbd_t"
 			],
@@ -82,10 +214,6 @@
 			[
 				"prior_",
 				"prior_alpha"
-			],
-			[
-				"re",
-				"Reject"
 			],
 			[
 				"accept",
@@ -136,16 +264,8 @@
 				"sigma"
 			],
 			[
-				"sig",
-				"sigma_2"
-			],
-			[
 				"sim",
 				"sigma_1"
-			],
-			[
-				"prop",
-				"proposal"
 			],
 			[
 				"ti",
@@ -176,20 +296,8 @@
 				"burn_in"
 			],
 			[
-				"prio",
-				"prior_norm"
-			],
-			[
-				"sam",
-				"smaple"
-			],
-			[
 				"in",
 				"integrate"
-			],
-			[
-				"sampl",
-				"sample\tstatement"
 			],
 			[
 				"pos",
@@ -198,10 +306,6 @@
 			[
 				"p",
 				"pi\tmodule"
-			],
-			[
-				"samp",
-				"sample"
 			],
 			[
 				"unfi",
@@ -250,10 +354,6 @@
 			[
 				"upp",
 				"uppper_adaptive_envelope"
-			],
-			[
-				"x_",
-				"x_position\tstatement"
 			],
 			[
 				"w",
@@ -306,10 +406,6 @@
 			[
 				"ex",
 				"exponential_sampling\tfunction"
-			],
-			[
-				"sa",
-				"sample_size"
 			],
 			[
 				"uniform",
@@ -418,113 +514,42 @@
 			[
 				"id",
 				"idx"
-			],
-			[
-				"qr",
-				"qr\tfunction"
-			],
-			[
-				"ei",
-				"eigvals\tfunction"
-			],
-			[
-				"Q",
-				"Q_k"
-			],
-			[
-				"arr",
-				"array\tmodule"
-			],
-			[
-				"iter",
-				"iterations"
-			],
-			[
-				"he",
-				"hessenberg_form\tfunction"
-			],
-			[
-				"cond",
-				"condition_B_epsilon"
-			],
-			[
-				"condi",
-				"condition_B\tstatement"
-			],
-			[
-				"errors_S",
-				"errors_Scipy_B_epsilon"
-			],
-			[
-				"R_epsilon_",
-				"R_epsilon_scipy"
-			],
-			[
-				"tri",
-				"triu"
-			],
-			[
-				"les",
-				"least_squares_estimator"
-			],
-			[
-				"leas",
-				"least_squares_estimator"
-			],
-			[
-				"col",
-				"column_stack\tfunction"
-			],
-			[
-				"tS",
-				"tScipy_B"
-			],
-			[
-				"B_e",
-				"B_epsilon"
-			],
-			[
-				"tCho",
-				"tCholesky_B\tstatement"
-			],
-			[
-				"tC",
-				"tCholesky_B_epsilon"
-			],
-			[
-				"t_C",
-				"tCholesky_B"
-			],
-			[
-				"eig",
-				"eig_max"
-			],
-			[
-				"cho",
-				"cholesky_factorization"
-			],
-			[
-				"mea",
-				"measure_factorization_time"
-			],
-			[
-				"B",
-				"B_epsilon"
-			],
-			[
-				"eigen",
-				"eigen_values"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "Tarea_Bootstrap/bootstrap.py",
+			"file": "Tarea_9/metropolis_hastings_hybrid_kernels.py",
 			"settings":
 			{
-				"buffer_size": 3479,
+				"buffer_size": 11470,
 				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Tarea_7/metropolis_hastings.py",
+			"settings":
+			{
+				"buffer_size": 15115,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Tarea_9/ecologia.py",
+			"settings":
+			{
+				"buffer_size": 6470,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Tarea_9/mercado.py",
+			"settings":
+			{
+				"buffer_size": 7255,
 				"line_ending": "Windows"
 			}
 		}
@@ -597,8 +622,23 @@
 	],
 	"file_history":
 	[
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_9/imgs/rejection_market_s=2000_b=10000",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_9/imgs/rejection_market_s=2000_b=1000",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_9/imgs/rejection_market_s=2000_b=100000",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_7/metropolis_hastings.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_9/ecologia.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_7/imgs/prob3_2000_100000_sd_1.0.txt",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_7/output_2000_1000.txt",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_9/metropolis_hastings_hybrid_kernels.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_9/mercado.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_9/imgs/means_ecology_s=2000_b=100000",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_6/metropolis_hastings.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Machine_Learning/C16TAM2_CIMAT-SelectTopicsOfMachineLearning/yolito-pascal/train.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_8/weibull_failure_times.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_8/nuclear_plant_failure_times.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_8/metropolis_hastings_hybrid_kernels.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_7/metropolis_hastings_hybrid_kernels.py",
+		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_Bootstrap/bootstrap.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/computo_cientifico.sublime-project",
 		"/C/Users/fcova/AppData/Roaming/Sublime Text 3/Packages/Anaconda/Anaconda.sublime-settings",
 		"/D/Users/Francisco/Documents/Materias/Matematicas/Analisis_de_Datos/Concurso_Visualizacion/r/distance.R",
@@ -611,7 +651,6 @@
 		"/D/Users/Francisco/Documents/Materias/Matematicas/Analisis_de_Datos/Concurso_Visualizacion/data/usage/2018-04.csv",
 		"/D/Users/Francisco/Documents/Materias/Matematicas/Analisis_de_Datos/Concurso_Visualizacion/data/temperature/2018_df",
 		"/D/Users/Francisco/Documents/Materias/Matematicas/Analisis_de_Datos/Concurso_Visualizacion/r/2018.csv",
-		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_6/metropolis_hastings.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_6/hist_N=2000_Prop=Beta.png",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Machine_Learning/C16TAM2_CIMAT-SelectTopicsOfMachineLearning/dcgan-celeba/train.py",
 		"/D/Users/Francisco/Documents/Materias/Computacion/Computo_Cientifico/Tarea_5/linear_congruential_generator.py",
@@ -710,21 +749,7 @@
 		"/D/Users/Francisco/Documents/GitHub/Action-RPG-Godot/controllers/ai_controller/states/combat/combat.gd",
 		"/D/Users/Francisco/Documents/GitHub/Action-RPG-Godot/autoload/global_constants.gd",
 		"/D/Users/Francisco/Documents/GitHub/Action-RPG-Godot/default_env.tres",
-		"/D/Users/Francisco/Documents/GitHub/Action-RPG-Godot/debug/StatesStackDiplayer.tscn",
-		"/D/Users/Francisco/Documents/GitHub/Action-RPG-Godot/pawn/pawn_state_machine.gd",
-		"/D/Users/Francisco/Documents/GitHub/Action-RPG-Godot/pawn/states/action/stagger.gd",
-		"/D/Users/Francisco/Documents/GitHub/Action-RPG-Godot/pawn/throw_spawn.gd",
-		"/D/Users/Francisco/Documents/GitHub/Action-RPG-Godot/levels/Prototype_Demo.gd",
-		"/D/Users/Francisco/Documents/GitHub/Action-RPG-Godot/resources/tile_sets/outdoor.tres",
-		"/D/Users/Francisco/Documents/Programming/Misc/c_to_assembly/c_to_assembly.cpp",
-		"/D/Users/Francisco/Documents/Programming/Misc/c_to_assembly/c_to_assembly.s",
-		"/D/Users/Francisco/Documents/Programming/Misc/gsm/kalibrate_output.txt",
-		"/D/Users/Francisco/Documents/Paper Work/General/RFC.txt",
-		"/D/Users/Francisco/Documents/Programming/Misc/net_stop_audiosrv.txt",
-		"/D/Users/Francisco/Documents/GitHub/Action-RPG-Godot/ActionRPG-Ideas.txt",
-		"/D/Users/Francisco/Documents/Programming/Misc/gsm/gsm.py",
-		"/D/Users/Francisco/Documents/Programming/Misc/ackerman_function/ackerman.s",
-		"/D/Users/Francisco/Documents/Programming/Misc/ackerman.cpp"
+		"/D/Users/Francisco/Documents/GitHub/Action-RPG-Godot/debug/StatesStackDiplayer.tscn"
 	],
 	"find":
 	{
@@ -744,6 +769,44 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"args.burn_in)",
+			"b={}",
+			"'sigma'",
+			"label='real alpha')",
+			"len(rejected)",
+			"tyle='--', ",
+			"linestyle='--')",
+			"sample",
+			"=3",
+			"dim",
+			"10000",
+			"1000",
+			"names",
+			"plt.",
+			" = [",
+			"normal",
+			"_unif_p",
+			"proposal_unif_p",
+			"01",
+			"sample",
+			"proposal",
+			"* prior_",
+			"likelihood",
+			"_b",
+			"pois",
+			"binomial",
+			".16",
+			"proposal",
+			"numpy",
+			"_3",
+			"al_3",
+			"binomial",
+			"prob3",
+			"prob1",
+			"normal",
+			"beta",
+			"alpha",
+			"metropolis_hastings_hybrid_kernels",
 			"\\",
 			"print",
 			"Retiro",
@@ -833,45 +896,7 @@
 			"2.828",
 			"3.934",
 			"5.153",
-			"\\\\",
-			"degree",
-			"% (b",
-			")",
-			"%f",
-			"rm(b",
-			"b",
-			"\"",
-			"\")",
-			"Leas",
-			"\"Leas",
-			" : ",
-			"(\"Leas",
-			"\"",
-			")",
-			"(",
-			"sigma_prime",
-			"times_",
-			"_B",
-			"errors_",
-			"max_eigen_values",
-			"_epsilon",
-			"errors",
-			"times",
-			"errors",
-			")",
-			"max_eigen_values",
-			"_B",
-			"er",
-			"name_",
-			"B_epsilon",
-			"Cholesky",
-			"arg",
-			"_k[idx, :]",
-			"[],",
-			"abs",
-			"),",
-			"_epsilon",
-			"_B"
+			"\\\\"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -891,24 +916,24 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Tarea_Bootstrap/bootstrap.py",
+					"file": "Tarea_9/metropolis_hastings_hybrid_kernels.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3479,
+						"buffer_size": 11470,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2308,
-								2308
+								2825,
+								2830
 							]
 						],
 						"settings":
@@ -918,7 +943,97 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1083.0,
+						"translation.y": 1692.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Tarea_7/metropolis_hastings.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15115,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4854.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Tarea_9/ecologia.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6470,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4416,
+								4416
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1288.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Tarea_9/mercado.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7255,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4158,
+								4158
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2071.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
