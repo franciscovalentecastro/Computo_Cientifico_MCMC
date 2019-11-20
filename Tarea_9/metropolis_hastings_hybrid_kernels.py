@@ -131,7 +131,7 @@ def plot_walk(walk, rejected, posterior, name):
 
     # Plot contour
     X_lin = np.linspace(X_min, X_max, 100)
-    Y_lin = np.linspace(Y_max, Y_min, 100)
+    Y_lin = np.linspace(Y_min, Y_max, 100)
 
     # Create grid
     X, Y = np.meshgrid(X_lin, Y_lin, indexing='xy')
@@ -165,7 +165,7 @@ def plot_sample(sample, posterior, name, params=['a', 'b']):
 
     # Plot contour
     X_lin = np.linspace(X_min, X_max, 100)
-    Y_lin = np.linspace(Y_max, Y_min, 100)
+    Y_lin = np.linspace(Y_min, Y_max, 100)
 
     # Create grid
     X, Y = np.meshgrid(X_lin, Y_lin, indexing='xy')

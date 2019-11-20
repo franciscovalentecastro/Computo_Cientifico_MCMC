@@ -44,13 +44,13 @@ def sample_problem_ecology():
         return stats.beta.logpdf(x, alpha, beta)
 
     def prior_N(x):
-        if x not in elements:
+        if int(x) not in elements:
             return 0.
         else:
             return 1.0 / (N_max + 1.0)
 
     def log_prior_N(x):
-        if x not in elements:
+        if int(x) not in elements:
             return -np.inf
         else:
             return -np.log(N_max + 1.0)
